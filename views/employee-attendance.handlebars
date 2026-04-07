@@ -1,0 +1,705 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .employee-header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-welcome {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .employee-info h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-details {
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .employee-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .employee-nav a:hover,
+        .employee-nav a.active {
+            color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .attendance-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-box.present .stat-number {
+            color: #48bb78;
+        }
+
+        .stat-box.absent .stat-number {
+            color: #f56565;
+        }
+
+        .stat-box.late .stat-number {
+            color: #ed8936;
+        }
+
+        .stat-box.percentage .stat-number {
+            color: #4299e1;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .attendance-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .attendance-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .attendance-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+        }
+
+        .attendance-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .attendance-content {
+            padding: 1.5rem;
+        }
+
+        .calendar-view {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+        }
+
+        .calendar-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .calendar-day.header {
+            background: #f8fafc;
+            color: #6b7280;
+            font-weight: 700;
+        }
+
+        .calendar-day.present {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .calendar-day.absent {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .calendar-day.leave {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        .calendar-day.weekend {
+            background: #edf2f7;
+            color: #a0aec0;
+        }
+
+        .calendar-day:not(.header):hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .recent-attendance {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+        }
+
+        .attendance-record {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .attendance-record:hover {
+            background: #f8fafc;
+        }
+
+        .attendance-record:last-child {
+            border-bottom: none;
+        }
+
+        .record-date {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .record-time {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .record-status {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-present {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-late {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        @media (max-width: 768px) {
+            .employee-nav ul {
+                gap: 1rem;
+            }
+
+            .attendance-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .calendar-grid {
+                gap: 0.25rem;
+            }
+
+            .calendar-day {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="employee-header">
+        <div class="container">
+            <div class="employee-welcome">
+                <div class="employee-avatar">{{substring user.name 0 2}}</div>
+                <div class="employee-info">
+                    <h1>Attendance</h1>
+                    <p class="employee-details">{{user.position}} • {{user.department}} • {{user.employeeId}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {{> employee-nav}}
+    <div class="container">
+
+        <section class="attendance-stats">
+            <div class="stat-box present">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number">22</div>
+                <div class="stat-label">Present Days</div>
+            </div>
+            <div class="stat-box absent">
+                <div class="stat-icon">❌</div>
+                <div class="stat-number">2</div>
+                <div class="stat-label">Absent Days</div>
+            </div>
+            <div class="stat-box late">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-number">1</div>
+                <div class="stat-label">Late Arrivals</div>
+            </div>
+            <div class="stat-box percentage">
+                <div class="stat-icon">📊</div>
+                <div class="stat-number">88%</div>
+                <div class="stat-label">Attendance Rate</div>
+            </div>
+        </section>
+
+        <section class="calendar-view">
+            <h3 class="calendar-header">October 2025 Attendance Calendar</h3>
+            <div class="calendar-grid">
+                <div class="calendar-day header">Sun</div>
+                <div class="calendar-day header">Mon</div>
+                <div class="calendar-day header">Tue</div>
+                <div class="calendar-day header">Wed</div>
+                <div class="calendar-day header">Thu</div>
+                <div class="calendar-day header">Fri</div>
+                <div class="calendar-day header">Sat</div>
+
+                <div class="calendar-day weekend"></div>
+                <div class="calendar-day weekend"></div>
+                <div class="calendar-day weekend"></div>
+                <div class="calendar-day present">1</div>
+                <div class="calendar-day present">2</div>
+                <div class="calendar-day present">3</div>
+                <div class="calendar-day weekend">4</div>
+
+                <div class="calendar-day weekend">5</div>
+                <div class="calendar-day present">6</div>
+                <div class="calendar-day present">7</div>
+                <div class="calendar-day present">8</div>
+                <div class="calendar-day present">9</div>
+                <div class="calendar-day leave">10</div>
+                <div class="calendar-day weekend">11</div>
+
+                <div class="calendar-day weekend">12</div>
+                <div class="calendar-day present">13</div>
+                <div class="calendar-day present">14</div>
+                <div class="calendar-day absent">15</div>
+                <div class="calendar-day present">16</div>
+                <div class="calendar-day present">17</div>
+                <div class="calendar-day weekend">18</div>
+
+                <div class="calendar-day weekend">19</div>
+                <div class="calendar-day present">20</div>
+                <div class="calendar-day present">21</div>
+                <div class="calendar-day present">22</div>
+                <div class="calendar-day present">23</div>
+                <div class="calendar-day present">24</div>
+                <div class="calendar-day weekend">25</div>
+
+                <div class="calendar-day weekend">26</div>
+                <div class="calendar-day present">27</div>
+                <div class="calendar-day">28</div>
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #c6f6d5;"></div>
+                    <span>Present</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #fed7d7;"></div>
+                    <span>Absent</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #feebc8;"></div>
+                    <span>Leave</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: #edf2f7;"></div>
+                    <span>Weekend</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-attendance">
+            <div class="attendance-header">
+                <h3 class="attendance-title">Recent Attendance Records</h3>
+            </div>
+            <div class="attendance-record">
+                <div>
+                    <div class="record-date">Monday, October 27, 2025</div>
+                    <div class="record-time">Check-in: 9:00 AM | Check-out: 6:00 PM</div>
+                </div>
+                <span class="record-status status-present">Present</span>
+            </div>
+            <div class="attendance-record">
+                <div>
+                    <div class="record-date">Friday, October 24, 2025</div>
+                    <div class="record-time">Check-in: 9:15 AM | Check-out: 6:05 PM</div>
+                </div>
+                <span class="record-status status-late">Late</span>
+            </div>
+            <div class="attendance-record">
+                <div>
+                    <div class="record-date">Thursday, October 23, 2025</div>
+                    <div class="record-time">Check-in: 8:55 AM | Check-out: 6:00 PM</div>
+                </div>
+                <span class="record-status status-present">Present</span>
+            </div>
+            <div class="attendance-record">
+                <div>
+                    <div class="record-date">Wednesday, October 22, 2025</div>
+                    <div class="record-time">Check-in: 9:02 AM | Check-out: 6:10 PM</div>
+                </div>
+                <span class="record-status status-present">Present</span>
+            </div>
+            <div class="attendance-record">
+                <div>
+                    <div class="record-date">Tuesday, October 21, 2025</div>
+                    <div class="record-time">Check-in: 9:00 AM | Check-out: 6:00 PM</div>
+                </div>
+                <span class="record-status status-present">Present</span>
+            </div>
+        </section>
+    </div>
+    <script src="js/api.js"></script>
+    <script>
+        const api = new API();
+        let currentEmployee = null;
+        let attendanceRecords = [];
+        let loggedInEmployeeId = null;
+
+        async function loadEmployeeData() {
+            try {
+               
+                const response = await fetch('/api/employees/me');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    currentEmployee = result.data;
+                    loggedInEmployeeId = currentEmployee._id;
+                    console.log('Current Employee:', currentEmployee);
+                    updateEmployeeHeader();
+                } else {
+                    throw new Error('Failed to load employee data');
+                }
+            } catch (error) {
+                console.error('Error loading employee:', error);
+                alert('Error loading employee data. Please make sure you are logged in.');
+            }
+        }
+
+        function updateEmployeeHeader() {
+            
+            console.log('Header already rendered with session data');
+        }
+
+        async function loadAttendanceData() {
+            try {
+                if (!loggedInEmployeeId) {
+                    console.log('No employee ID available yet');
+                    return;
+                }
+
+                
+                const allRecords = await api.getAttendanceByEmployee(loggedInEmployeeId);
+                attendanceRecords = Array.isArray(allRecords) ? allRecords : [];
+
+                updateStats();
+                updateRecentRecords();
+                updateCalendar();
+            } catch (error) {
+                console.error('Error loading attendance:', error);
+                attendanceRecords = [];
+                updateStats();
+                updateRecentRecords();
+                updateCalendar();
+            }
+        } function updateStats() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            
+            const monthRecords = attendanceRecords.filter(record => {
+                const recordDate = new Date(record.date);
+                return recordDate.getMonth() === currentMonth &&
+                    recordDate.getFullYear() === currentYear;
+            });
+
+            const presentCount = monthRecords.filter(r => r.status === 'present').length;
+            const absentCount = monthRecords.filter(r => r.status === 'absent').length;
+            const lateCount = monthRecords.filter(r => r.status === 'late').length;
+
+            const totalDays = monthRecords.length || 1;
+            const attendanceRate = Math.round((presentCount / totalDays) * 100) || 0;
+
+            document.querySelector('.stat-box.present .stat-number').textContent = presentCount;
+            document.querySelector('.stat-box.absent .stat-number').textContent = absentCount;
+            document.querySelector('.stat-box.late .stat-number').textContent = lateCount;
+            document.querySelector('.stat-box.percentage .stat-number').textContent = attendanceRate + '%';
+        }
+
+        function updateRecentRecords() {
+            const recentSection = document.querySelector('.recent-attendance');
+            const header = recentSection.querySelector('.attendance-header');
+
+           
+            recentSection.innerHTML = '';
+            recentSection.appendChild(header);
+
+            if (attendanceRecords.length === 0) {
+                const noData = document.createElement('div');
+                noData.style.padding = '2rem';
+                noData.style.textAlign = 'center';
+                noData.style.color = '#6b7280';
+                noData.textContent = 'No attendance records found';
+                recentSection.appendChild(noData);
+                return;
+            }
+
+            
+            const sortedRecords = [...attendanceRecords]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 10);
+
+            sortedRecords.forEach(record => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'attendance-record';
+
+                const date = new Date(record.date);
+                const dateStr = date.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const checkIn = record.checkIn || 'N/A';
+                const checkOut = record.checkOut || 'N/A';
+
+                let statusClass = 'status-present';
+                if (record.status === 'late') statusClass = 'status-late';
+                else if (record.status === 'absent') statusClass = 'status-absent';
+                else if (record.status === 'leave') statusClass = 'status-leave';
+
+                recordDiv.innerHTML = `
+                    <div>
+                        <div class="record-date">${dateStr}</div>
+                        <div class="record-time">Check-in: ${checkIn} | Check-out: ${checkOut}</div>
+                    </div>
+                    <span class="record-status ${statusClass}">${record.status.charAt(0).toUpperCase() + record.status.slice(1)}</span>
+                `;
+
+                recentSection.appendChild(recordDiv);
+            });
+        }
+
+        function updateCalendar() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.querySelector('.calendar-header').textContent =
+                `${monthNames[currentMonth]} ${currentYear} Attendance Calendar`;
+
+            
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+           
+            const calendarGrid = document.querySelector('.calendar-grid');
+
+           
+            const headers = Array.from(calendarGrid.querySelectorAll('.calendar-day.header'));
+            calendarGrid.innerHTML = '';
+            headers.forEach(h => calendarGrid.appendChild(h));
+
+            
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day weekend';
+                calendarGrid.appendChild(emptyDay);
+            }
+
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                const dayDate = new Date(currentYear, currentMonth, day);
+                const dayOfWeek = dayDate.getDay();
+
+               
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    dayDiv.className = 'calendar-day weekend';
+                    dayDiv.textContent = day;
+                } else {
+                   
+                    const record = attendanceRecords.find(r => {
+                        const recordDate = new Date(r.date);
+                        return recordDate.getDate() === day &&
+                            recordDate.getMonth() === currentMonth &&
+                            recordDate.getFullYear() === currentYear;
+                    });
+
+                    if (record) {
+                        dayDiv.className = `calendar-day ${record.status}`;
+                    } else {
+                        dayDiv.className = 'calendar-day';
+                    }
+                    dayDiv.textContent = day;
+                }
+
+                calendarGrid.appendChild(dayDiv);
+            }
+        }
+
+       
+        async function init() {
+            await loadEmployeeData();
+            await loadAttendanceData();
+        }
+
+        init();
+    </script>
+
+

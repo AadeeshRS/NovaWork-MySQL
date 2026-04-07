@@ -1,0 +1,665 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .employee-header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-welcome {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .employee-info h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-details {
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .employee-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .employee-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .employee-nav a:hover,
+        .employee-nav a.active {
+            color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .leave-balance {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .balance-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .balance-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .balance-card.annual .balance-number {
+            color: #48bb78;
+        }
+
+        .balance-card.sick .balance-number {
+            color: #ed8936;
+        }
+
+        .balance-card.casual .balance-number {
+            color: #4299e1;
+        }
+
+        .balance-card.total .balance-number {
+            color: #9f7aea;
+        }
+
+        .balance-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .apply-leave-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .apply-leave-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .apply-leave-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .form-input,
+        .form-select {
+            padding: 0.75rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-select option {
+            background: #764ba2;
+            color: white;
+        }
+
+        .apply-leave-btn {
+            padding: 0.875rem 2rem;
+            background: white;
+            color: #667eea;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .apply-leave-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .leave-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .leave-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .leave-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+        }
+
+        .leave-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .leave-content {
+            padding: 0;
+        }
+
+        .leave-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .leave-item:hover {
+            background: #f8fafc;
+        }
+
+        .leave-item:last-child {
+            border-bottom: none;
+        }
+
+        .leave-info {
+            flex: 1;
+        }
+
+        .leave-date {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .leave-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .leave-detail-item {
+            font-size: 0.875rem;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .leave-status {
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+
+        .status-approved {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-pending {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        .status-rejected {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        @media (max-width: 768px) {
+            .employee-nav ul {
+                gap: 1rem;
+            }
+
+            .leave-balance {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .apply-leave-form {
+                grid-template-columns: 1fr;
+            }
+
+            .leave-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="employee-header">
+        <div class="container">
+            <div class="employee-welcome">
+                <div class="employee-avatar">{{substring user.name 0 2}}</div>
+                <div class="employee-info">
+                    <h1>Leave Requests</h1>
+                    <p class="employee-details">{{user.position}} • {{user.department}} • {{user.employeeId}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {{> employee-nav}}
+    <div class="container">
+
+        <section class="leave-balance">
+            <div class="balance-card annual">
+                <div class="balance-icon">🏖️</div>
+                <div class="balance-number">18</div>
+                <div class="balance-label">Annual Leave</div>
+            </div>
+            <div class="balance-card sick">
+                <div class="balance-icon">🤒</div>
+                <div class="balance-number">8</div>
+                <div class="balance-label">Sick Leave</div>
+            </div>
+            <div class="balance-card casual">
+                <div class="balance-icon">☀️</div>
+                <div class="balance-number">5</div>
+                <div class="balance-label">Casual Leave</div>
+            </div>
+            <div class="balance-card total">
+                <div class="balance-icon">📊</div>
+                <div class="balance-number">31</div>
+                <div class="balance-label">Total Available</div>
+            </div>
+        </section>
+
+        <section class="apply-leave-section">
+            <h3 class="apply-leave-title">Apply for Leave</h3>
+            <form class="apply-leave-form">
+                <div class="form-group">
+                    <label class="form-label">Leave Type</label>
+                    <select class="form-select" required>
+                        <option value="">Select Type</option>
+                        <option value="annual">Annual Leave</option>
+                        <option value="sick">Sick Leave</option>
+                        <option value="casual">Casual Leave</option>
+                        <option value="emergency">Emergency Leave</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">From Date</label>
+                    <input type="date" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">To Date</label>
+                    <input type="date" class="form-input" required>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label class="form-label">Reason</label>
+                    <input type="text" class="form-input" placeholder="Enter reason for leave..." required>
+                </div>
+            </form>
+            <button class="apply-leave-btn">Submit Leave Request</button>
+        </section>
+
+        <section class="leave-card">
+            <div class="leave-header">
+                <h3 class="leave-title">Leave Request History</h3>
+            </div>
+            <div class="leave-content">
+                <div class="leave-item">
+                    <div class="leave-info">
+                        <div class="leave-date">September 10-12, 2025</div>
+                        <div class="leave-details">
+                            <span class="leave-detail-item">3 days</span>
+                            <span class="leave-detail-item">Annual Leave</span>
+                            <span class="leave-detail-item">Approved by Priya Singh</span>
+                        </div>
+                    </div>
+                    <span class="leave-status status-approved">Approved</span>
+                </div>
+                <div class="leave-item">
+                    <div class="leave-info">
+                        <div class="leave-date">August 22, 2025</div>
+                        <div class="leave-details">
+                            <span class="leave-detail-item">1 day</span>
+                            <span class="leave-detail-item">Casual Leave</span>
+                            <span class="leave-detail-item">Awaiting approval</span>
+                        </div>
+                    </div>
+                    <span class="leave-status status-pending">Pending</span>
+                </div>
+                <div class="leave-item">
+                    <div class="leave-info">
+                        <div class="leave-date">July 15-17, 2025</div>
+                        <div class="leave-details">
+                            <span class="leave-detail-item">3 days</span>
+                            <span class="leave-detail-item">Annual Leave</span>
+                            <span class="leave-detail-item">Denied - Insufficient balance</span>
+                        </div>
+                    </div>
+                    <span class="leave-status status-rejected">Rejected</span>
+                </div>
+                <div class="leave-item">
+                    <div class="leave-info">
+                        <div class="leave-date">June 5, 2025</div>
+                        <div class="leave-details">
+                            <span class="leave-detail-item">1 day</span>
+                            <span class="leave-detail-item">Sick Leave</span>
+                            <span class="leave-detail-item">Approved by Priya Singh</span>
+                        </div>
+                    </div>
+                    <span class="leave-status status-approved">Approved</span>
+                </div>
+                <div class="leave-item">
+                    <div class="leave-info">
+                        <div class="leave-date">May 20-21, 2025</div>
+                        <div class="leave-details">
+                            <span class="leave-detail-item">2 days</span>
+                            <span class="leave-detail-item">Casual Leave</span>
+                            <span class="leave-detail-item">Approved by Priya Singh</span>
+                        </div>
+                    </div>
+                    <span class="leave-status status-approved">Approved</span>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="js/api.js"></script>
+    <script>
+        const api = new API();
+        let currentEmployee = null;
+        let loggedInEmployeeId = null;
+        let leaveRequests = [];
+
+        async function loadEmployeeData() {
+            try {
+               
+                const response = await fetch('/api/employees/me');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    currentEmployee = result.data;
+                    loggedInEmployeeId = currentEmployee._id;
+                    console.log('Current Employee:', currentEmployee);
+                    updateEmployeeHeader();
+                    await loadLeaveRequests();
+                } else {
+                    throw new Error('Failed to load employee data');
+                }
+            } catch (error) {
+                console.error('Error loading employee:', error);
+                alert('Error loading employee data. Please make sure you are logged in.');
+            }
+        }
+
+        function updateEmployeeHeader() {
+           
+            console.log('Header already rendered with session data');
+        }
+
+        async function loadLeaveRequests() {
+            try {
+               
+                leaveRequests = await api.getLeavesByEmployee(loggedInEmployeeId);
+                updateLeaveBalance();
+                displayLeaveRequests();
+            } catch (error) {
+                console.error('Error loading leave requests:', error);
+                leaveRequests = [];
+                updateLeaveBalance();
+                displayLeaveRequests();
+            }
+        }
+
+        function updateLeaveBalance() {
+          
+            const approved = leaveRequests.filter(r => r.status === 'approved');
+            const annualUsed = approved.filter(r => r.leaveType === 'annual').reduce((sum, r) => sum + r.days, 0);
+            const sickUsed = approved.filter(r => r.leaveType === 'sick').reduce((sum, r) => sum + r.days, 0);
+            const casualUsed = approved.filter(r => r.leaveType === 'casual').reduce((sum, r) => sum + r.days, 0);
+
+            const annualAvailable = Math.max(0, 18 - annualUsed);
+            const sickAvailable = Math.max(0, 10 - sickUsed);
+            const casualAvailable = Math.max(0, 7 - casualUsed);
+            const totalAvailable = annualAvailable + sickAvailable + casualAvailable;
+
+            document.querySelector('.leave-balance').innerHTML = `
+                <div class="balance-card annual">
+                    <div class="balance-icon">🏖️</div>
+                    <div class="balance-number">${annualAvailable}</div>
+                    <div class="balance-label">Annual Leave</div>
+                </div>
+                <div class="balance-card sick">
+                    <div class="balance-icon">🤒</div>
+                    <div class="balance-number">${sickAvailable}</div>
+                    <div class="balance-label">Sick Leave</div>
+                </div>
+                <div class="balance-card casual">
+                    <div class="balance-icon">☀️</div>
+                    <div class="balance-number">${casualAvailable}</div>
+                    <div class="balance-label">Casual Leave</div>
+                </div>
+                <div class="balance-card total">
+                    <div class="balance-icon">📊</div>
+                    <div class="balance-number">${totalAvailable}</div>
+                    <div class="balance-label">Total Available</div>
+                </div>
+            `;
+        }
+
+        function displayLeaveRequests() {
+            const leaveContent = document.querySelector('.leave-content');
+
+            if (leaveRequests.length === 0) {
+                leaveContent.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                        No leave requests found. Apply for leave using the form above.
+                    </div>
+                `;
+                return;
+            }
+
+            
+            const sorted = [...leaveRequests].sort((a, b) => new Date(b.appliedDate) - new Date(a.appliedDate));
+
+            leaveContent.innerHTML = sorted.map(request => {
+                const fromDate = new Date(request.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const toDate = new Date(request.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const dateRange = request.startDate === request.endDate ? fromDate : `${fromDate} - ${toDate}`;
+
+                let statusClass = 'status-pending';
+                let statusDisplay = 'Pending';
+                if (request.status === 'approved') {
+                    statusClass = 'status-approved';
+                    statusDisplay = 'Approved';
+                } else if (request.status === 'rejected') {
+                    statusClass = 'status-rejected';
+                    statusDisplay = 'Rejected';
+                }
+
+                const leaveTypeDisplay = request.leaveType.charAt(0).toUpperCase() + request.leaveType.slice(1);
+
+                return `
+                    <div class="leave-item">
+                        <div class="leave-info">
+                            <div class="leave-date">${dateRange}</div>
+                            <div class="leave-details">
+                                <span class="leave-detail-item">${request.days} day${request.days > 1 ? 's' : ''}</span>
+                                <span class="leave-detail-item">${leaveTypeDisplay} Leave</span>
+                                <span class="leave-detail-item">${request.reason}</span>
+                                ${request.status === 'rejected' && request.rejectionReason ? `<span class="leave-detail-item" style="color: #ef4444;">Reason: ${request.rejectionReason}</span>` : ''}
+                            </div>
+                        </div>
+                        <span class="leave-status ${statusClass}">${statusDisplay}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        
+        document.querySelector('.apply-leave-btn').addEventListener('click', async function () {
+            const form = document.querySelector('.apply-leave-form');
+            const leaveType = form.querySelector('select').value;
+            const startDate = form.querySelectorAll('input[type="date"]')[0].value;
+            const endDate = form.querySelectorAll('input[type="date"]')[1].value;
+            const reason = form.querySelector('input[type="text"]').value;
+
+            if (!leaveType || !startDate || !endDate || !reason) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            
+            const from = new Date(startDate);
+            const to = new Date(endDate);
+            const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
+
+            if (days <= 0) {
+                alert('End date must be after start date');
+                return;
+            }
+
+            try {
+               
+                const newRequest = {
+                    employee: loggedInEmployeeId,
+                    leaveType,
+                    startDate,
+                    endDate,
+                    days,
+                    reason,
+                    status: 'pending'
+                };
+
+                await api.createLeave(newRequest);
+
+                
+                form.reset();
+
+                
+                await loadLeaveRequests();
+
+                alert('Leave request submitted successfully!');
+            } catch (error) {
+                console.error('Error submitting leave request:', error);
+                alert('Error submitting leave request. Please try again.');
+            }
+        });
+
+       
+        loadEmployeeData();
+    </script>
+
+

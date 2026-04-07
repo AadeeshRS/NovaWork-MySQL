@@ -1,0 +1,312 @@
+<style>
+    body {
+        background: #f7fafc;
+    }
+
+    .login-container {
+        max-width: 500px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+        position: relative;
+        z-index: 10;
+    }
+
+    .login-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+    }
+
+    .login-header {
+        margin-bottom: 2rem;
+    }
+
+    .login-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin-bottom: 0.5rem;
+    }
+
+    .login-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    .user-type-selector {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .user-type-card {
+        padding: 1.25rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fafafa;
+    }
+
+    .user-type-card:hover {
+        border-color: #667eea;
+        background: white;
+        transform: translateY(-2px);
+    }
+
+    .user-type-card.active {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+
+    .user-type-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .user-type-title {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.25rem;
+    }
+
+    .user-type-desc {
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+
+    .login-form {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.9375rem;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-checkbox-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-checkbox {
+        width: auto;
+        cursor: pointer;
+    }
+
+    .checkbox-label {
+        font-weight: normal;
+        color: #4a5568;
+        cursor: pointer;
+        font-size: 0.9375rem;
+    }
+
+    .forgot-password {
+        color: #667eea;
+        text-decoration: none;
+        font-size: 0.9375rem;
+        font-weight: 600;
+    }
+
+    .forgot-password:hover {
+        text-decoration: underline;
+    }
+
+    .login-btn {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-btn:active {
+        transform: translateY(0);
+    }
+
+    .login-footer {
+        text-align: center;
+        color: #6b7280;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .login-footer a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .login-card {
+            padding: 2rem;
+        }
+
+        .user-type-selector {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2 class="login-title">Sign In</h2>
+            <p class="login-subtitle">Choose your role and enter your credentials</p>
+        </div>
+
+        <div class="user-type-selector">
+            <div class="user-type-card active" onclick="selectUserType('admin')">
+                <div class="user-type-icon">👨‍💼</div>
+                <div class="user-type-title">Administrator</div>
+                <div class="user-type-desc">Full system access</div>
+            </div>
+            <div class="user-type-card" onclick="selectUserType('employee')">
+                <div class="user-type-icon">👨‍💻</div>
+                <div class="user-type-title">Employee</div>
+                <div class="user-type-desc">View salary & profile</div>
+            </div>
+        </div>
+
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="remember" class="form-checkbox">
+                    <label for="remember" class="checkbox-label">Remember me</label>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="login-footer">
+            <p>Don't have an account? <a href="/contact">Contact Administrator</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedUserType = 'admin';
+
+    function selectUserType(type) {
+        selectedUserType = type;
+        document.querySelectorAll('.user-type-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        event.target.closest('.user-type-card').classList.add('active');
+    }
+
+    async function handleLogin(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const loginBtn = document.querySelector('.login-btn');
+        
+     
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Signing in...';
+        
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Verify the selected UI tile matches their true database role
+                if (selectedUserType !== data.user.role) {
+                    await fetch('/api/auth/logout', { method: 'POST' });
+                    alert(`Role mismatch: You are trying to log in as an ${selectedUserType.toUpperCase()}, but your account is registered as ${data.user.role.toUpperCase()}.`);
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                    return;
+                }
+
+                if (data.user.role === 'admin') {
+                    window.location.href = '/admin-dashboard';
+                } else {
+                    window.location.href = '/employee-dashboard';
+                }
+            } else {
+                alert(data.message || 'Invalid email or password');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred during login. Please try again.');
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Sign In';
+        }
+    }
+</script>

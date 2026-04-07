@@ -1,0 +1,447 @@
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .contact-hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .contact-hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.9;
+    }
+
+    .contact-content {
+        padding: 4rem 0;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    .contact-form-section {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        padding: 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #fafafa;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .contact-info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-info-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+
+    .info-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: #f8fafc;
+        border-radius: 8px;
+    }
+
+    .info-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.125rem;
+    }
+
+    .info-text {
+        flex: 1;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+        color: #4a5568;
+    }
+
+    .office-hours {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .hours-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .hours-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .hours-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hours-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .faq-section {
+        background: #f7fafc;
+        padding: 4rem 0;
+    }
+
+    .faq-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: #1a202c;
+    }
+
+    .faq-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 2rem;
+    }
+
+    .faq-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+
+    .faq-question {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 1rem;
+    }
+
+    .faq-answer {
+        color: #4a5568;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .contact-hero-title {
+            font-size: 2rem;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .faq-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<section class="contact-hero">
+    <div class="container">
+        <h1 class="contact-hero-title">Get in Touch</h1>
+        <p class="contact-hero-subtitle">We're here to help you with all your salary management needs</p>
+    </div>
+</section>
+
+<section class="contact-content">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-form-section">
+                <h2 class="form-title">Send Us a Message</h2>
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" id="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" id="lastName" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class="form-label">Company Name</label>
+                        <input type="text" id="company" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject" class="form-label">Subject</label>
+                        <select id="subject" class="form-select" required>
+                            <option value="">Select a subject</option>
+                            <option value="sales">Sales Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="demo">Request Demo</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-info-section">
+                <div class="contact-info-card">
+                    <h3 class="info-card-title">📍 Contact Information</h3>
+                    <div class="info-item">
+                        <div class="info-text">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">novawork@bmu.edu.in</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-text">
+                            <div class="info-label">Phone</div>
+                            <div class="info-value">+91 7376680288</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-text">
+                            <div class="info-label">Address</div>
+                            <div class="info-value">67th Milestone, NH-8, Kapriwas, Gurugram, Haryana 122413</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="office-hours">
+                    <h3 class="hours-title">🕒 Office Hours</h3>
+                    <ul class="hours-list">
+                        <li class="hours-item">
+                            <span>Monday - Friday</span>
+                            <span>9:00 AM - 6:00 PM</span>
+                        </li>
+                        <li class="hours-item">
+                            <span>Saturday</span>
+                            <span>10:00 AM - 4:00 PM</span>
+                        </li>
+                        <li class="hours-item">
+                            <span>Sunday</span>
+                            <span>Closed</span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 1rem; opacity: 0.9; font-size: 0.875rem;">
+                        All times are Indian Standard Time (IST)
+                    </p>
+                </div>
+
+                <div class="contact-info-card">
+                    <h3 class="info-card-title">🚀 Quick Support</h3>
+                    <div class="info-item">
+                        <div class="info-icon">💬</div>
+                        <div class="info-text">
+                            <div class="info-label">Live Chat</div>
+                            <div class="info-value">Available 24/7 for urgent issues</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📚</div>
+                        <div class="info-text">
+                            <div class="info-label">Knowledge Base</div>
+                            <div class="info-value">Self-service help center</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🎫</div>
+                        <div class="info-text">
+                            <div class="info-label">Support Tickets</div>
+                            <div class="info-value">Track your support requests</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="faq-section">
+    <div class="container">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3 class="faq-question">How secure is my payroll data?</h3>
+                <p class="faq-answer">We use bank-level encryption and security protocols to protect your data. Our platform is SOC 2 compliant and undergoes regular security audits to ensure the highest level of protection.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">Can I integrate with my existing HR systems?</h3>
+                <p class="faq-answer">Yes! Our platform offers seamless integration with over 100 popular HR and accounting systems including Workday, BambooHR, QuickBooks, and more.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">What support options are available?</h3>
+                <p class="faq-answer">We offer 24/7 live chat support, email support, phone support during business hours, comprehensive documentation, and dedicated account managers for enterprise clients.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">How quickly can I get started?</h3>
+                <p class="faq-answer">Most clients can be up and running within 48 hours. Our implementation team will guide you through the setup process and provide training for your team.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">Do you offer mobile access?</h3>
+                <p class="faq-answer">Absolutely! Our platform is fully responsive and includes dedicated mobile apps for both iOS and Android, allowing employees and managers to access the system anywhere.</p>
+            </div>
+            <div class="faq-item">
+                <h3 class="faq-question">What about compliance and reporting?</h3>
+                <p class="faq-answer">Our system automatically handles tax calculations, compliance reporting, and stays updated with the latest regulations. We support multi-country payroll and various compliance requirements.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        
+        alert(`Thank you, ${firstName} ${lastName}! Your message has been received. We'll get back to you at ${email} soon.`);
+        
+        
+        this.reset();
+    });
+</script>

@@ -1,0 +1,66 @@
+{
+    "companyName": "NovaWork",
+    "totalDepartments": 6,
+    "departments": [
+        {
+            "deptId": "DEPT001",
+            "deptName": "Information Technology",
+            "deptIcon": "💻",
+            "employees": 45,
+            "avgSalary": 65000,
+            "projects": 12,
+            "budget": 5000000,
+            "head": "Amit Kumar"
+        },
+        {
+            "deptId": "DEPT002",
+            "deptName": "Finance",
+            "deptIcon": "💰",
+            "employees": 28,
+            "avgSalary": 55000,
+            "projects": 8,
+            "budget": 3500000,
+            "head": "Priya Singh"
+        },
+        {
+            "deptId": "DEPT003",
+            "deptName": "Human Resources",
+            "deptIcon": "👥",
+            "employees": 15,
+            "avgSalary": 48000,
+            "projects": 5,
+            "budget": 2000000,
+            "head": "Rahul Verma"
+        },
+        {
+            "deptId": "DEPT004",
+            "deptName": "Marketing",
+            "deptIcon": "📱",
+            "employees": 32,
+            "avgSalary": 52000,
+            "projects": 15,
+            "budget": 4000000,
+            "head": "Sneha Patel"
+        },
+        {
+            "deptId": "DEPT005",
+            "deptName": "Operations",
+            "deptIcon": "🔧",
+            "employees": 40,
+            "avgSalary": 50000,
+            "projects": 10,
+            "budget": 3800000,
+            "head": "Vikram Reddy"
+        },
+        {
+            "deptId": "DEPT006",
+            "deptName": "Sales",
+            "deptIcon": "📊",
+            "employees": 38,
+            "avgSalary": 58000,
+            "projects": 20,
+            "budget": 4500000,
+            "head": "Anita Desai"
+        }
+    ]
+}

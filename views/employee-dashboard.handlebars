@@ -1,0 +1,1206 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .employee-header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-welcome {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .employee-info h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-details {
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .employee-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .employee-nav a:hover,
+        .employee-nav a.active {
+            color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(72, 187, 120, 0.1) 0%, transparent 70%);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover::before {
+            transform: scale(1.5);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-box.primary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-box.primary .stat-label {
+            opacity: 0.9;
+        }
+
+        .salary-card {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(72, 187, 120, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .salary-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .salary-title {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .salary-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .salary-period {
+            opacity: 0.8;
+        }
+
+        .attendance-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .attendance-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .attendance-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+        }
+
+        .attendance-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .attendance-stat {
+            text-align: center;
+        }
+
+        .attendance-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #48bb78;
+            margin-bottom: 0.25rem;
+        }
+
+        .attendance-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .info-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+        }
+
+        .info-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-content {
+            padding: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .info-item:hover {
+            background: #f8fafc;
+        }
+
+        .info-label {
+            color: #6b7280;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-label::before {
+            content: '▸';
+            color: #48bb78;
+            font-weight: bold;
+        }
+
+        .info-value {
+            color: #1a202c;
+            font-weight: 600;
+        }
+
+        .recent-payslips {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .recent-payslips:hover {
+            transform: translateY(-2px);
+        }
+
+        .payslip-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .payslip-item:hover {
+            background: #f8fafc;
+        }
+
+        .payslip-item:last-child {
+            border-bottom: none;
+        }
+
+        .payslip-info {
+            flex: 1;
+        }
+
+        .payslip-month {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.25rem;
+            font-size: 1.125rem;
+        }
+
+        .payslip-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .payslip-amount {
+            font-weight: 700;
+            color: #48bb78;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .payslip-download {
+            padding: 0.625rem 1.25rem;
+            background: #f0fff4;
+            color: #48bb78;
+            border: 2px solid #9ae6b4;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payslip-download:hover {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .quick-actions:hover {
+            transform: translateY(-2px);
+        }
+
+        .quick-actions-grid {
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #374151;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-action::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(72, 187, 120, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .quick-action:hover::before {
+            left: 100%;
+        }
+
+        .quick-action:hover {
+            background: #f0fff4;
+            border-color: #48bb78;
+            color: #48bb78;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(72, 187, 120, 0.2);
+        }
+
+        .quick-action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-action:hover .quick-action-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .quick-action-text {
+            flex: 1;
+        }
+
+        .quick-action-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-action-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .leave-balance {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(66, 153, 225, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leave-balance::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .leave-balance-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .leave-balance-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .leave-balance-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .leave-balance-item:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .leave-balance-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .leave-balance-label {
+            font-size: 0.9375rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .employee-welcome {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .employee-nav ul {
+                gap: 1rem;
+            }
+
+            .employee-grid,
+            .info-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .attendance-stats {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .leave-balance-content {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .payslip-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="employee-header">
+        <div class="container">
+            <div class="employee-welcome">
+                <div class="employee-avatar">{{substring user.name 0 2}}</div>
+                <div class="employee-info">
+                    <h1>Welcome, {{user.name}}</h1>
+                    <p class="employee-details">{{user.position}} • {{user.department}} • {{user.employeeId}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{{> employee-nav}}
+
+    <div class="container">
+
+        <section class="employee-grid" id="statsSection">
+           
+        </section>
+
+
+        <section class="leave-balance" id="leaveSection">
+           
+        </section>
+
+        <section class="attendance-card" style="margin-bottom: 2rem;" id="attendanceSection">
+            <h3 class="attendance-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                October 2025 Attendance Summary
+            </h3>
+            <div class="attendance-stats">
+                <div class="attendance-stat">
+                    <div class="attendance-number" style="color: #48bb78;">22</div>
+                    <div class="attendance-label">Present</div>
+                </div>
+                <div class="attendance-stat">
+                    <div class="attendance-number" style="color: #f56565;">2</div>
+                    <div class="attendance-label">Absent</div>
+                </div>
+                <div class="attendance-stat">
+                    <div class="attendance-number" style="color: #ed8936;">1</div>
+                    <div class="attendance-label">Late</div>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <a href="/employee-attendance"
+                    style="display: inline-block; padding: 0.625rem 1.5rem; background: #f0fff4; color: #48bb78; border: 2px solid #48bb78; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
+                    View Full Calendar
+                </a>
+            </div>
+        </section>
+
+
+        <section class="info-sections">
+            <div class="info-card">
+                <div class="info-header">
+                    <h3 class="info-title">Personal Information</h3>
+                </div>
+                <div class="info-content">
+                    <div class="info-item">
+                        <span class="info-label">Employee ID</span>
+                        <span class="info-value">EMP-001</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value">rohit.sharma@novawork.in</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value">+91 9876543210</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Hire Date</span>
+                        <span class="info-value">January 15, 2023</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Employment Type</span>
+                        <span class="info-value">Full-time</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-header">
+                    <h3 class="info-title">Job Information</h3>
+                </div>
+                <div class="info-content">
+                    <div class="info-item">
+                        <span class="info-label">Position</span>
+                        <span class="info-value">Software Developer</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Department</span>
+                        <span class="info-value">IT Department</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Manager</span>
+                        <span class="info-value">Priya Singh</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Work Location</span>
+                        <span class="info-value">Bengaluru Office</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Base Salary</span>
+                        <span class="info-value">₹9,60,000/year</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="recent-payslips">
+            <div class="info-header">
+                <h3 class="info-title">Recent Payslips</h3>
+            </div>
+            <div class="payslip-item">
+                <div class="payslip-info">
+                    <div class="payslip-month">October 2025</div>
+                    <div class="payslip-date">Processed on October 31, 2025 • Paid</div>
+                </div>
+                <div class="payslip-amount">₹80,000</div>
+                <a href="#" class="payslip-download">Download</a>
+            </div>
+            <div class="payslip-item">
+                <div class="payslip-info">
+                    <div class="payslip-month">September 2025</div>
+                    <div class="payslip-date">Processed on September 30, 2025 • Paid</div>
+                </div>
+                <div class="payslip-amount">₹80,000</div>
+                <a href="#" class="payslip-download">Download</a>
+            </div>
+            <div class="payslip-item">
+                <div class="payslip-info">
+                    <div class="payslip-month">August 2025</div>
+                    <div class="payslip-date">Processed on August 31, 2025 • Paid</div>
+                </div>
+                <div class="payslip-amount">₹80,000</div>
+                <a href="#" class="payslip-download">Download</a>
+            </div>
+        </section>
+
+
+        <section class="quick-actions">
+            <div class="info-header">
+                <h3 class="info-title">Quick Actions</h3>
+            </div>
+            <div class="quick-actions-grid">
+                <a href="employee-profile" class="quick-action">
+                    <div class="quick-action-icon">👤</div>
+                    <div class="quick-action-text">
+                        <div class="quick-action-title">Update Profile</div>
+                        <div class="quick-action-desc">Edit personal information</div>
+                    </div>
+                </a>
+                <a href="employee-leave" class="quick-action">
+                    <div class="quick-action-icon">📅</div>
+                    <div class="quick-action-text">
+                        <div class="quick-action-title">Apply Leave</div>
+                        <div class="quick-action-desc">Submit leave request</div>
+                    </div>
+                </a>
+                <a href="employee-payslips" class="quick-action">
+                    <div class="quick-action-icon">💰</div>
+                    <div class="quick-action-text">
+                        <div class="quick-action-title">View Payslips</div>
+                        <div class="quick-action-desc">Download pay statements</div>
+                    </div>
+                </a>
+                <a href="employee-attendance" class="quick-action">
+                    <div class="quick-action-icon">📊</div>
+                    <div class="quick-action-text">
+                        <div class="quick-action-title">Attendance Records</div>
+                        <div class="quick-action-desc">View attendance history</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+
+    <script src="js/api.js"></script>
+    <script>
+        class Employee {
+            static employeeCount = 0;
+
+            constructor(name, id, department, designation, salary, joiningDate, email = null, phone = null, address = null) {
+                this.name = name;
+                this.id = id;
+                this.department = department;
+                this.designation = designation;
+                this.salary = typeof salary === 'number' ? salary : parseInt(salary) || 0;
+                this.joiningDate = new Date(joiningDate);
+                this.email = email;
+                this.phone = phone;
+                this.address = address;
+                this.presentDays = 0; 
+                this.annualLeave = 18;
+                this.sickLeave = 8;
+                this.casualLeave = 5;
+                Employee.employeeCount++;
+            }
+
+            async fetchAttendanceData(employeeMongoId) {
+                try {
+                    const attendanceRecords = await api.getAttendanceByEmployee(employeeMongoId);
+                    
+                    
+                    const now = new Date();
+                    const currentMonth = now.getMonth();
+                    const currentYear = now.getFullYear();
+
+                  
+                    const monthRecords = attendanceRecords.filter(record => {
+                        const recordDate = new Date(record.date);
+                        return recordDate.getMonth() === currentMonth &&
+                            recordDate.getFullYear() === currentYear;
+                    });
+
+                   
+                    this.presentDays = monthRecords.filter(r => r.status === 'present').length;
+                } catch (error) {
+                    console.error('Error fetching attendance:', error);
+                    this.presentDays = 0;
+                }
+            }
+
+            async fetchLeaveBalance(employeeMongoId) {
+                try {
+                    const leaveRequests = await api.getLeavesByEmployee(employeeMongoId);
+                    
+                  
+                    const approved = leaveRequests.filter(r => r.status === 'approved');
+                    const annualUsed = approved.filter(r => r.leaveType === 'annual').reduce((sum, r) => sum + (r.days || 0), 0);
+                    const sickUsed = approved.filter(r => r.leaveType === 'sick').reduce((sum, r) => sum + (r.days || 0), 0);
+                    const casualUsed = approved.filter(r => r.leaveType === 'casual').reduce((sum, r) => sum + (r.days || 0), 0);
+
+                    
+                    this.annualLeave = Math.max(0, 18 - annualUsed);
+                    this.sickLeave = Math.max(0, 8 - sickUsed);
+                    this.casualLeave = Math.max(0, 5 - casualUsed);
+                } catch (error) {
+                    console.error('Error fetching leave balance:', error);
+                }
+            }
+
+            calculateYearsOfService() {
+                const today = new Date();
+                const years = today.getFullYear() - this.joiningDate.getFullYear();
+                return years;
+            }
+
+            calculatePerformance() {
+                const attendanceRate = (this.presentDays / 22) * 100;
+                return Math.round(attendanceRate);
+            }
+
+            getTotalLeaves() {
+                return this.annualLeave + this.sickLeave + this.casualLeave;
+            }
+
+            displayStats() {
+                const statsSection = document.getElementById('statsSection');
+
+                statsSection.innerHTML = `
+                    <div class="stat-box primary">
+                        <div class="stat-icon">💵</div>
+                        <div class="stat-number">₹${this.salary.toLocaleString()}</div>
+                        <div class="stat-label">Monthly Salary</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-number" style="color: #48bb78;">${this.presentDays}</div>
+                        <div class="stat-label">Present Days</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">🏖️</div>
+                        <div class="stat-number" style="color: #4299e1;">${this.getTotalLeaves()}</div>
+                        <div class="stat-label">Leaves Available</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-number" style="color: #9f7aea;">${this.calculatePerformance()}%</div>
+                        <div class="stat-label">Performance</div>
+                    </div>
+                `;
+            }
+
+            displayLeaveBalance() {
+                const leaveSection = document.getElementById('leaveSection');
+
+                leaveSection.innerHTML = `
+                    <h3 class="leave-balance-title">Leave Balance for 2025</h3>
+                    <div class="leave-balance-content">
+                        <div class="leave-balance-item">
+                            <div class="leave-balance-number">${this.annualLeave}</div>
+                            <div class="leave-balance-label">Annual Leave</div>
+                        </div>
+                        <div class="leave-balance-item">
+                            <div class="leave-balance-number">${this.sickLeave}</div>
+                            <div class="leave-balance-label">Sick Leave</div>
+                        </div>
+                        <div class="leave-balance-item">
+                            <div class="leave-balance-number">${this.casualLeave}</div>
+                            <div class="leave-balance-label">Casual Leave</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            displayDashboard() {
+                this.displayStats();
+                this.displayLeaveBalance();
+                this.displayPersonalInfo();
+                this.displayAttendanceSummary();
+                this.displayRecentPayslips();
+                console.log("Employee Dashboard Details :");
+                console.log(`Name: ${this.name}`);
+                console.log(`ID: ${this.id}`);
+                console.log(`Department: ${this.department}`);
+                console.log(`Designation: ${this.designation}`);
+                console.log(`Salary: ₹${this.salary.toLocaleString()}`);
+                console.log(`Years of Service: ${this.calculateYearsOfService()} years`);
+                console.log(`Performance: ${this.calculatePerformance()}%`);
+                console.log(`Total Leaves Available: ${this.getTotalLeaves()}`);
+            }
+
+            displayPersonalInfo() {
+               
+                const personalCard = document.querySelectorAll('.info-card')[0];
+                if (personalCard) {
+                    const joinDateFormatted = new Date(this.joiningDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    personalCard.querySelector('.info-content').innerHTML = `
+                        <div class="info-item">
+                            <span class="info-label">Employee ID</span>
+                            <span class="info-value">${this.id}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">${this.email || 'Not Provided'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone</span>
+                            <span class="info-value">${this.phone || 'Not Provided'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Hire Date</span>
+                            <span class="info-value">${joinDateFormatted}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Address</span>
+                            <span class="info-value">${this.address || 'Not Provided'}</span>
+                        </div>
+                    `;
+                }
+
+                
+                const jobCard = document.querySelectorAll('.info-card')[1];
+                if (jobCard) {
+                    const yearsOfService = this.calculateYearsOfService();
+                    
+                    jobCard.querySelector('.info-content').innerHTML = `
+                        <div class="info-item">
+                            <span class="info-label">Position</span>
+                            <span class="info-value">${this.designation}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Department</span>
+                            <span class="info-value">${this.department}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Years of Service</span>
+                            <span class="info-value">${yearsOfService} ${yearsOfService === 1 ? 'year' : 'years'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Monthly Salary</span>
+                            <span class="info-value">₹${this.salary.toLocaleString()}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Annual Salary</span>
+                            <span class="info-value">₹${(this.salary * 12).toLocaleString()}/year</span>
+                        </div>
+                    `;
+                }
+            }
+
+            async displayAttendanceSummary() {
+                try {
+                   
+                    const attendanceRecords = await fetch('/api/employees/me')
+                        .then(res => res.json())
+                        .then(async result => {
+                            if (result.success && result.data) {
+                                return await api.getAttendanceByEmployee(result.data._id);
+                            }
+                            return [];
+                        });
+
+                    
+                    const now = new Date();
+                    const currentMonth = now.getMonth();
+                    const currentYear = now.getFullYear();
+                    const monthName = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+                    
+                    const monthRecords = attendanceRecords.filter(record => {
+                        const recordDate = new Date(record.date);
+                        return recordDate.getMonth() === currentMonth &&
+                            recordDate.getFullYear() === currentYear;
+                    });
+
+                
+                    const presentCount = monthRecords.filter(r => r.status === 'present').length;
+                    const absentCount = monthRecords.filter(r => r.status === 'absent').length;
+                    const lateCount = monthRecords.filter(r => r.status === 'late').length;
+
+                  
+                    const attendanceSection = document.querySelector('.attendance-card');
+                    if (attendanceSection) {
+                        attendanceSection.querySelector('.attendance-title').textContent = `${monthName} Attendance Summary`;
+                        attendanceSection.querySelector('.attendance-stats').innerHTML = `
+                            <div class="attendance-stat">
+                                <div class="attendance-number" style="color: #48bb78;">${presentCount}</div>
+                                <div class="attendance-label">Present</div>
+                            </div>
+                            <div class="attendance-stat">
+                                <div class="attendance-number" style="color: #f56565;">${absentCount}</div>
+                                <div class="attendance-label">Absent</div>
+                            </div>
+                            <div class="attendance-stat">
+                                <div class="attendance-number" style="color: #ed8936;">${lateCount}</div>
+                                <div class="attendance-label">Late</div>
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Error loading attendance summary:', error);
+                }
+            }
+
+            async displayRecentPayslips() {
+                try {
+                   
+                    const employees = await api.getEmployees();
+                    const employeeData = employees.find(emp => emp.employeeId === this.id);
+
+                    if (!employeeData || !employeeData._id) {
+                        console.log('Employee not found in database');
+                        document.querySelector('.recent-payslips').innerHTML = `
+                            <div class="info-header">
+                                <h3 class="info-title">Recent Payslips</h3>
+                            </div>
+                            <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                                No payslip records found
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    const payrollData = await api.getPayrollByEmployee(employeeData._id);
+                    const payslipsSection = document.querySelector('.recent-payslips');
+
+                    if (!payrollData || payrollData.length === 0) {
+                        payslipsSection.innerHTML = `
+                            <div class="info-header">
+                                <h3 class="info-title">Recent Payslips</h3>
+                            </div>
+                            <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                                No payslip records found
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+
+                    
+                    const sortedPayslips = [...payrollData]
+                        .sort((a, b) => new Date(b.paymentDate || 0) - new Date(a.paymentDate || 0))
+                        .slice(0, 3);
+
+                    const payslipsHTML = sortedPayslips.map(payslip => {
+                        let monthDisplay;
+                        if (typeof payslip.month === 'string') {
+                            monthDisplay = payslip.month;
+                        } else if (typeof payslip.month === 'number') {
+                            monthDisplay = monthNames[payslip.month - 1] || 'Unknown';
+                        } else {
+                            monthDisplay = 'Unknown';
+                        }
+
+                        const monthYear = `${monthDisplay} ${payslip.year || new Date().getFullYear()}`;
+                        const processDate = payslip.paymentDate ?
+                            new Date(payslip.paymentDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) :
+                            'Not processed';
+
+                        return `
+                            <div class="payslip-item">
+                                <div class="payslip-info">
+                                    <div class="payslip-month">${monthYear}</div>
+                                    <div class="payslip-date">Processed on ${processDate} • ${payslip.status.charAt(0).toUpperCase() + payslip.status.slice(1)}</div>
+                                </div>
+                                <div class="payslip-amount">₹${payslip.netSalary.toLocaleString()}</div>
+                                <a href="employee-payslips.html" class="payslip-download">View</a>
+                            </div>
+                        `;
+                    }).join('');
+
+                    payslipsSection.innerHTML = `
+                        <div class="info-header">
+                            <h3 class="info-title">Recent Payslips</h3>
+                        </div>
+                        ${payslipsHTML}
+                    `;
+                } catch (error) {
+                    console.error('Error loading payslips:', error);
+                    document.querySelector('.recent-payslips').innerHTML = `
+                        <div class="info-header">
+                            <h3 class="info-title">Recent Payslips</h3>
+                        </div>
+                        <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                            Error loading payslips
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        const api = new API();
+        let currentEmployee;
+        let employeeArray = [];
+
+        async function loadEmployeeDashboard() {
+            try {
+                console.log('Loading employee dashboard...');
+
+                const response = await fetch('/api/employees/me');
+                const result = await response.json();
+                console.log('API Response:', result);
+
+                if (result.success && result.data) {
+                    const emp = result.data;
+                    console.log('Current Employee from MongoDB:', emp);
+
+                   
+                    currentEmployee = new Employee(
+                        emp.name,
+                        emp.employeeId,
+                        emp.department,
+                        emp.position,
+                        emp.salary,
+                        emp.joinDate,
+                        emp.email,
+                        emp.phone,
+                        emp.address
+                    );
+
+                   
+                    await currentEmployee.fetchAttendanceData(emp._id);
+                    await currentEmployee.fetchLeaveBalance(emp._id);
+
+                    console.log('Current Employee:', currentEmployee);
+
+                    
+                    currentEmployee.displayDashboard();
+
+                    console.log('Employee Details:');
+                    console.log({
+                        Name: currentEmployee.name,
+                        ID: currentEmployee.id,
+                        Department: currentEmployee.department,
+                        Designation: currentEmployee.designation,
+                        Salary: `₹${currentEmployee.salary.toLocaleString()}`,
+                        JoiningDate: currentEmployee.joiningDate.toLocaleDateString(),
+                        YearsOfService: currentEmployee.calculateYearsOfService(),
+                        Performance: `${currentEmployee.calculatePerformance()}%`,
+                        TotalLeaves: currentEmployee.getTotalLeaves()
+                    });
+                } else {
+                    console.error('Failed to load employees from database');
+                    showFallbackData();
+                }
+            } catch (error) {
+                console.error('Error loading employee dashboard:', error);
+                showFallbackData();
+            }
+        }
+
+        function updateHeaderInfo(employee) {
+            
+            console.log('Header already rendered with session data:', employee.name);
+        }
+
+        function showFallbackData() {
+            currentEmployee = new Employee(
+                "Rohit Sharma",
+                "EMP001",
+                "Information Technology",
+                "Senior Software Engineer",
+                80000,
+                "2020-03-15"
+            );
+
+            let employee2 = new Employee("Priya Singh", "EMP002", "Finance", "Analyst", 65000, "2021-06-20");
+            let employee3 = new Employee("Amit Kumar", "EMP003", "HR", "Manager", 70000, "2019-11-10");
+
+            employeeArray = [currentEmployee, employee2, employee3];
+            currentEmployee.displayDashboard();
+
+            console.log('Using fallback data - MongoDB not available');
+        }
+
+        document.addEventListener('DOMContentLoaded', loadEmployeeDashboard);
+    </script>
+

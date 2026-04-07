@@ -1,0 +1,344 @@
+<style>
+    .about-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .about-hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .about-hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.9;
+    }
+
+    .about-content {
+        padding: 4rem 0;
+    }
+
+    .about-section {
+        margin-bottom: 4rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #1a202c;
+    }
+
+    .section-content {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        color: #4a5568;
+        line-height: 1.8;
+        font-size: 1.125rem;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .feature-item {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #1a202c;
+    }
+
+    .feature-description {
+        color: #4a5568;
+        line-height: 1.6;
+    }
+
+    .team-section {
+        background: #f7fafc;
+        padding: 4rem 0;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .team-member {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+
+    .member-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 2.5rem;
+        color: white;
+        font-weight: 700;
+    }
+
+    .member-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 0.5rem;
+    }
+
+    .member-position {
+        color: #6b7280;
+        margin-bottom: 1rem;
+    }
+
+    .member-description {
+        color: #4a5568;
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+
+    .stats-section {
+        padding: 4rem 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1.125rem;
+        opacity: 0.9;
+    }
+
+    .mission-vision {
+        padding: 4rem 0;
+    }
+
+    .mission-vision-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .mission-vision-item {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+    }
+
+    .mission-vision-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .mission-vision-text {
+        color: #4a5568;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+        .about-hero-title {
+            font-size: 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .features-grid,
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .mission-vision-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<section class="about-hero">
+    <div class="container">
+        <h1 class="about-hero-title">About NovaWork</h1>
+        <p class="about-hero-subtitle">Revolutionizing payroll management with cutting-edge technology and unparalleled service</p>
+    </div>
+</section>
+
+<section class="about-content">
+    <div class="container">
+        <div class="about-section">
+            <h2 class="section-title">Who We Are</h2>
+            <div class="section-content">
+                <p>NovaWork is a leading provider of comprehensive employee salary management solutions. Founded with the vision of simplifying payroll processes for businesses of all sizes, we have been serving organizations worldwide for over a decade.</p>
+                <br>
+                <p>Our team of experts combines deep industry knowledge with innovative technology to deliver solutions that not only meet today's payroll challenges but anticipate tomorrow's needs. We understand that managing employee compensation is more than just processing numbers—it's about empowering your workforce and driving your business forward.</p>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Innovation</h3>
+                <p class="feature-description">Cutting-edge technology that stays ahead of industry trends and regulatory changes.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Security</h3>
+                <p class="feature-description">Bank-level security protocols to protect your sensitive payroll data.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Scalability</h3>
+                <p class="feature-description">Solutions that grow with your business, from startups to enterprise.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mission-vision">
+    <div class="container">
+        <div class="mission-vision-grid">
+            <div class="mission-vision-item">
+                <h3 class="mission-vision-title">🎯 Our Mission</h3>
+                <p class="mission-vision-text">
+                    To empower organizations with intuitive, reliable, and comprehensive salary management solutions that streamline payroll processes, ensure compliance, and enhance employee satisfaction. We are committed to transforming the way businesses handle compensation management through innovation and excellence.
+                </p>
+            </div>
+            <div class="mission-vision-item">
+                <h3 class="mission-vision-title">🔮 Our Vision</h3>
+                <p class="mission-vision-text">
+                    To be the global leader in employee compensation management technology, creating a world where payroll processes are effortless, transparent, and employee-centric. We envision a future where every organization can focus on what they do best while we handle the complexities of salary management.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="container">
+        <h2 class="section-title" style="color: white;">Our Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Companies Served</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2M+</div>
+                <div class="stat-label">Employees Managed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime Guarantee</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Countries Supported</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="container">
+        <h2 class="section-title">Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-avatar">AR</div>
+                <h3 class="member-name">Aadeesh Ranjan</h3>
+                <p class="member-position">Full Stack Developer</p>
+                <p class="member-description">Expert in both frontend and backend development, building robust and scalable web applications.</p>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">AS</div>
+                <h3 class="member-name">Abhishek Kumar Shukla</h3>
+                <p class="member-position">Backend Developer</p>
+                <p class="member-description">Specializes in server-side logic, database management, and API development for seamless performance.</p>
+            </div>
+            <div class="team-member">
+                <div class="member-avatar">AA</div>
+                <h3 class="member-name">Anushree Agrawal</h3>
+                <p class="member-position">Frontend Developer</p>
+                <p class="member-description">Focused on creating engaging user interfaces and experiences with modern web technologies.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="about-content">
+    <div class="container">
+        <div class="about-section">
+            <h2 class="section-title">Ready to Transform Your Payroll?</h2>
+            <div class="section-content">
+                <p>Join thousands of companies who have already revolutionized their salary management with NovaWork. Experience the difference of working with a platform designed for the modern workplace.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="/contact" class="btn btn-primary" style="margin-right: 1rem;">Get Started</a>
+                    <a href="/login" class="btn btn-secondary">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

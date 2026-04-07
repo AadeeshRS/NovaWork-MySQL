@@ -1,0 +1,584 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-header p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .admin-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .admin-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dept-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .dept-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .dept-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .dept-head {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .dept-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .dept-stat {
+            text-align: center;
+        }
+
+        .dept-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .dept-stat-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .departments-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .departments-table th,
+        .departments-table td {
+            padding: 1.25rem;
+            font-size: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            text-align: left;
+        }
+
+        .departments-table th {
+            background: #f0f4ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .departments-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .departments-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .departments-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.625rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            color: #667eea;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .dept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-nav ul {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="admin-header" id="headerSection">
+        <div class="container">
+            <h1 class="admin-title">Department Management</h1>
+            <p>Manage organizational departments and structure</p>
+        </div>
+    </section>
+    {{> admin-nav}}
+    <div class="container">
+        <div class="dept-grid" id="departmentsGrid">
+
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">All Departments</h3>
+                <button class="add-btn" onclick="showAddDepartmentModal()">+ Add Department</button>
+            </div>
+            <table class="departments-table">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Department Head</th>
+                        <th>Total Employees</th>
+                        <th>Average Salary</th>
+                        <th>Budget (Annual)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="departmentsTable">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="js/api.js"></script>
+    <script>
+        const api = new API();
+        let allDepartments = [];
+        let allEmployees = [];
+
+        async function updateDepartmentsPage() {
+            try {
+                const [departmentsResponse, employeesResponse] = await Promise.all([
+                    api.getDepartments(),
+                    api.getEmployees()
+                ]);
+
+                allDepartments = departmentsResponse || [];
+                allEmployees = employeesResponse || [];
+
+                console.log('Loaded Departments from MongoDB:', allDepartments);
+                console.log('Loaded Employees from MongoDB:', allEmployees);
+                console.log('Sample employee department:', allEmployees[0]?.department);
+
+                updateDepartmentCards(allDepartments);
+                updateDepartmentTable(allDepartments);
+            } catch (error) {
+                console.error('Error loading departments:', error);
+            }
+        }
+
+        function updateDepartmentCards(departments) {
+            let departmentsGrid = document.getElementById("departmentsGrid");
+            departmentsGrid.innerHTML = '';
+
+            for (let dept of departments) {
+                const deptEmployees = allEmployees.filter(emp => emp.department === dept.name);
+                const employeeCount = deptEmployees.length;
+                const avgSalary = employeeCount > 0
+                    ? deptEmployees.reduce((sum, emp) => sum + emp.salary, 0) / employeeCount
+                    : 0;
+
+                console.log(`Department: ${dept.name}, Employees found: ${employeeCount}`);
+
+                let deptCard = document.createElement("div");
+                deptCard.className = "dept-card";
+                deptCard.innerHTML = `
+                    <div class="dept-icon">🏢</div>
+                    <div class="dept-name">${dept.name}</div>
+                    <div class="dept-head">${dept.headOfDepartment || 'Not Assigned'}</div>
+                    <div class="dept-stats">
+                        <div class="dept-stat">
+                            <div class="dept-stat-number">${employeeCount}</div>
+                            <div class="dept-stat-label">Employees</div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-number">₹${Math.round(avgSalary).toLocaleString()}</div>
+                            <div class="dept-stat-label">Avg Salary</div>
+                        </div>
+                        <div class="dept-stat">
+                            <div class="dept-stat-number">₹${(dept.budget / 100000).toFixed(1)}L</div>
+                            <div class="dept-stat-label">Budget</div>
+                        </div>
+                    </div>
+                `;
+
+                departmentsGrid.appendChild(deptCard);
+            }
+        }
+
+        function updateDepartmentTable(departments) {
+            let tableBody = document.getElementById("departmentsTable");
+            tableBody.innerHTML = '';
+
+            for (let dept of departments) {
+                const deptEmployees = allEmployees.filter(emp => emp.department === dept.name);
+                const employeeCount = deptEmployees.length;
+                const avgSalary = employeeCount > 0
+                    ? deptEmployees.reduce((sum, emp) => sum + emp.salary, 0) / employeeCount
+                    : 0;
+
+                let row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${dept.departmentId}</td>
+                    <td>${dept.name}</td>
+                    <td>${dept.headOfDepartment || 'Not Assigned'}</td>
+                    <td>${employeeCount}</td>
+                    <td>₹${Math.round(avgSalary).toLocaleString()}</td>
+                    <td>₹${dept.budget.toLocaleString()}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="viewDepartment('${dept._id}')" class="action-btn">View</button>
+                            <button onclick="editDepartment('${dept._id}')" class="action-btn">Edit</button>
+                            <button onclick="deleteDepartment('${dept._id}', '${dept.name}')" class="action-btn">Delete</button>
+                        </div>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            }
+        }
+
+        function viewDepartment(id) {
+            const dept = allDepartments.find(d => d._id === id);
+            if (!dept) return;
+
+            const deptEmployees = allEmployees.filter(emp => emp.department === dept.name);
+
+            const modal = document.createElement('div');
+            modal.id = 'viewDepartmentModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 12px; padding: 2rem; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;">
+                    <h2 style="margin-bottom: 1.5rem; color: #1a202c;">Department Details</h2>
+                    <div style="line-height: 2;">
+                        <p><strong>Department ID:</strong> ${dept.departmentId}</p>
+                        <p><strong>Name:</strong> ${dept.name}</p>
+                        <p><strong>Head:</strong> ${dept.headOfDepartment || 'Not Assigned'}</p>
+                        <p><strong>Location:</strong> ${dept.location || 'N/A'}</p>
+                        <p><strong>Total Employees:</strong> ${deptEmployees.length}</p>
+                        <p><strong>Budget:</strong> ₹${dept.budget.toLocaleString()}</p>
+                        <p><strong>Description:</strong> ${dept.description || 'N/A'}</p>
+                    </div>
+                    <button onclick="closeViewModal()" style="width: 100%; margin-top: 1.5rem; padding: 0.75rem; background: #667eea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        Close
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function closeViewModal() {
+            const modal = document.getElementById('viewDepartmentModal');
+            if (modal) modal.remove();
+        }
+
+        function editDepartment(id) {
+            const dept = allDepartments.find(d => d._id === id);
+            if (!dept) return;
+
+            const modal = document.createElement('div');
+            modal.id = 'editDepartmentModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 12px; padding: 2rem; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;">
+                    <h2 style="margin-bottom: 1.5rem; color: #1a202c;">Edit Department</h2>
+                    <form id="editDepartmentForm">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Department ID</label>
+                            <input type="text" name="departmentId" value="${dept.departmentId}" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Name</label>
+                            <input type="text" name="name" value="${dept.name}" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                            <textarea name="description" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 80px;">${dept.description || ''}</textarea>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Head of Department</label>
+                            <input type="text" name="headOfDepartment" value="${dept.headOfDepartment || ''}" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Budget</label>
+                            <input type="number" name="budget" value="${dept.budget}" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Location</label>
+                            <input type="text" name="location" value="${dept.location || ''}" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <button type="submit" style="flex: 1; padding: 0.75rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Update Department
+                            </button>
+                            <button type="button" onclick="closeEditModal()" style="flex: 1; padding: 0.75rem; background: #f1f5f9; color: #374151; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            document.getElementById('editDepartmentForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const deptData = Object.fromEntries(formData.entries());
+                deptData.budget = parseInt(deptData.budget);
+
+                try {
+                    await api.updateDepartment(id, deptData);
+                    alert('Department updated successfully!');
+                    closeEditModal();
+                    updateDepartmentsPage();
+                } catch (error) {
+                    alert('Error updating department: ' + error.message);
+                }
+            });
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editDepartmentModal');
+            if (modal) modal.remove();
+        }
+
+        async function deleteDepartment(id, name) {
+            if (confirm(`Are you sure you want to delete ${name} department?`)) {
+                try {
+                    await api.deleteDepartment(id);
+                    alert('Department deleted successfully!');
+                    updateDepartmentsPage();
+                } catch (error) {
+                    alert('Error deleting department: ' + error.message);
+                }
+            }
+        }
+
+        function showAddDepartmentModal() {
+            const modal = document.createElement('div');
+            modal.id = 'addDepartmentModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 12px; padding: 2rem; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;">
+                    <h2 style="margin-bottom: 1.5rem; color: #1a202c;">Add New Department</h2>
+                    <form id="addDepartmentForm">
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Department ID</label>
+                            <input type="text" name="departmentId" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Name</label>
+                            <input type="text" name="name" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Description</label>
+                            <textarea name="description" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 80px;"></textarea>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Head of Department</label>
+                            <input type="text" name="headOfDepartment" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Budget</label>
+                            <input type="number" name="budget" required style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Location</label>
+                            <input type="text" name="location" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                            <button type="submit" style="flex: 1; padding: 0.75rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Add Department
+                            </button>
+                            <button type="button" onclick="closeAddModal()" style="flex: 1; padding: 0.75rem; background: #f1f5f9; color: #374151; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            document.getElementById('addDepartmentForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const deptData = Object.fromEntries(formData.entries());
+                deptData.budget = parseInt(deptData.budget);
+
+                try {
+                    await api.createDepartment(deptData);
+                    alert('Department added successfully!');
+                    closeAddModal();
+                    updateDepartmentsPage();
+                } catch (error) {
+                    alert('Error adding department: ' + error.message);
+                }
+            });
+        }
+
+        function closeAddModal() {
+            const modal = document.getElementById('addDepartmentModal');
+            if (modal) modal.remove();
+        }
+
+        document.addEventListener('DOMContentLoaded', updateDepartmentsPage);
+    </script>
+
+

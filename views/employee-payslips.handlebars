@@ -1,0 +1,822 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .employee-header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .employee-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .employee-welcome {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .employee-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .employee-info h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-details {
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .employee-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .employee-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .employee-nav a:hover,
+        .employee-nav a.active {
+            color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .salary-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .overview-card.primary {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .overview-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .overview-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .overview-card.primary .overview-label {
+            opacity: 0.9;
+        }
+
+        .overview-amount {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .payslip-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .payslip-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .payslip-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+        }
+
+        .payslip-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payslip-content {
+            padding: 0;
+        }
+
+        .payslip-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .payslip-item:hover {
+            background: #f8fafc;
+        }
+
+        .payslip-item:last-child {
+            border-bottom: none;
+        }
+
+        .payslip-info {
+            flex: 1;
+        }
+
+        .payslip-month {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .payslip-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .detail-item {
+            font-size: 0.875rem;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .payslip-amount {
+            font-weight: 700;
+            color: #48bb78;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+        }
+
+        .payslip-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            background: #f0fff4;
+            color: #48bb78;
+            border: 1px solid #9ae6b4;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #48bb78;
+            color: white;
+            border-color: #48bb78;
+        }
+
+        .breakdown-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+        }
+
+        .breakdown-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .breakdown-section {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .breakdown-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
+        }
+
+        .breakdown-label {
+            color: #6b7280;
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .breakdown-total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .breakdown-total.earnings {
+            color: #48bb78;
+        }
+
+        .breakdown-total.deductions {
+            color: #f56565;
+        }
+
+        @media (max-width: 768px) {
+            .employee-nav ul {
+                gap: 1rem;
+            }
+
+            .salary-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .payslip-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .payslip-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="employee-header">
+        <div class="container">
+            <div class="employee-welcome">
+                <div class="employee-avatar">{{substring user.name 0 2}}</div>
+                <div class="employee-info">
+                    <h1>Payslips</h1>
+                    <p class="employee-details">{{user.position}} • {{user.department}} • {{user.employeeId}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {{> employee-nav}}
+    <div class="container">
+
+        <section class="salary-overview">
+            <div class="overview-card primary">
+                <div class="overview-icon">₹</div>
+                <div class="overview-label">Current Month</div>
+                <div class="overview-amount">₹80,000</div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📈</div>
+                <div class="overview-label">Average Salary</div>
+                <div class="overview-amount" style="color: #4299e1;">₹78,500</div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📊</div>
+                <div class="overview-label">YTD Earnings</div>
+                <div class="overview-amount" style="color: #48bb78;">₹7,85,000</div>
+            </div>
+        </section>
+
+        <section class="breakdown-card">
+            <h3 class="breakdown-title">Latest Salary Breakdown - October 2025</h3>
+            <div class="breakdown-grid">
+                <div class="breakdown-section">
+                    <h4>Earnings</h4>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Basic Salary</span>
+                        <span class="breakdown-value">₹50,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">House Rent Allowance</span>
+                        <span class="breakdown-value">₹20,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Transport Allowance</span>
+                        <span class="breakdown-value">₹5,000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Special Allowance</span>
+                        <span class="breakdown-value">₹10,000</span>
+                    </div>
+                    <div class="breakdown-total earnings">
+                        <span>Total Earnings</span>
+                        <span>₹85,000</span>
+                    </div>
+                </div>
+                <div class="breakdown-section">
+                    <h4>Deductions</h4>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Provident Fund</span>
+                        <span class="breakdown-value">₹2,400</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Professional Tax</span>
+                        <span class="breakdown-value">₹200</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Income Tax (TDS)</span>
+                        <span class="breakdown-value">₹2,400</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">ESI</span>
+                        <span class="breakdown-value">₹0</span>
+                    </div>
+                    <div class="breakdown-total deductions">
+                        <span>Total Deductions</span>
+                        <span>₹5,000</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="payslip-card">
+            <div class="payslip-header">
+                <h3 class="payslip-title">Payslip History</h3>
+            </div>
+            <div class="payslip-content">
+                <div class="payslip-item">
+                    <div class="payslip-info">
+                        <div class="payslip-month">October 2025</div>
+                        <div class="payslip-details">
+                            <span class="detail-item">Processed on Oct 31, 2025</span>
+                            <span class="detail-item">Paid</span>
+                        </div>
+                    </div>
+                    <div class="payslip-amount">₹80,000</div>
+                    <div class="payslip-actions">
+                        <a href="#" class="action-btn">View</a>
+                        <a href="#" class="action-btn">Download</a>
+                    </div>
+                </div>
+                <div class="payslip-item">
+                    <div class="payslip-info">
+                        <div class="payslip-month">September 2025</div>
+                        <div class="payslip-details">
+                            <span class="detail-item">Processed on Sep 30, 2025</span>
+                            <span class="detail-item">Paid</span>
+                        </div>
+                    </div>
+                    <div class="payslip-amount">₹80,000</div>
+                    <div class="payslip-actions">
+                        <a href="#" class="action-btn">View</a>
+                        <a href="#" class="action-btn">Download</a>
+                    </div>
+                </div>
+                <div class="payslip-item">
+                    <div class="payslip-info">
+                        <div class="payslip-month">August 2025</div>
+                        <div class="payslip-details">
+                            <span class="detail-item">Processed on Aug 31, 2025</span>
+                            <span class="detail-item">Paid</span>
+                        </div>
+                    </div>
+                    <div class="payslip-amount">₹80,000</div>
+                    <div class="payslip-actions">
+                        <a href="#" class="action-btn">View</a>
+                        <a href="#" class="action-btn">Download</a>
+                    </div>
+                </div>
+                <div class="payslip-item">
+                    <div class="payslip-info">
+                        <div class="payslip-month">July 2025</div>
+                        <div class="payslip-details">
+                            <span class="detail-item">Processed on Jul 31, 2025</span>
+                            <span class="detail-item">Paid</span>
+                        </div>
+                    </div>
+                    <div class="payslip-amount">₹78,000</div>
+                    <div class="payslip-actions">
+                        <a href="#" class="action-btn">View</a>
+                        <a href="#" class="action-btn">Download</a>
+                    </div>
+                </div>
+                <div class="payslip-item">
+                    <div class="payslip-info">
+                        <div class="payslip-month">June 2025</div>
+                        <div class="payslip-details">
+                            <span class="detail-item">Processed on Jun 30, 2025</span>
+                            <span class="detail-item">Paid</span>
+                        </div>
+                    </div>
+                    <div class="payslip-amount">₹77,000</div>
+                    <div class="payslip-actions">
+                        <a href="#" class="action-btn">View</a>
+                        <a href="#" class="action-btn">Download</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="js/api.js"></script>
+    <script>
+        const api = new API();
+        let currentEmployee = null;
+        let payrollRecords = [];
+        let loggedInEmployeeId = null;
+
+        async function loadEmployeeData() {
+            try {
+                
+                const response = await fetch('/api/employees/me');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    currentEmployee = result.data;
+                    loggedInEmployeeId = currentEmployee._id;
+                    console.log('Current Employee:', currentEmployee);
+                    updateEmployeeHeader();
+                } else {
+                    throw new Error('Failed to load employee data');
+                }
+            } catch (error) {
+                console.error('Error loading employee:', error);
+                alert('Error loading employee data. Please make sure you are logged in.');
+            }
+        }
+
+        function updateEmployeeHeader() {
+            
+            console.log('Header already rendered with session data');
+        }
+
+        async function loadPayrollData() {
+            try {
+                if (!loggedInEmployeeId) {
+                    console.log('No employee ID available yet');
+                    return;
+                }
+
+                const allRecords = await api.getPayrollByEmployee(loggedInEmployeeId);
+                payrollRecords = Array.isArray(allRecords) ? allRecords : [];
+
+                updateSalaryOverview();
+                updateLatestBreakdown();
+                updatePayslipHistory();
+            } catch (error) {
+                console.error('Error loading payroll:', error);
+                payrollRecords = [];
+                updateSalaryOverview();
+                updateLatestBreakdown();
+                updatePayslipHistory();
+            }
+        }
+
+        function updateSalaryOverview() {
+            if (payrollRecords.length === 0) {
+                return;
+            }
+
+            
+            const sortedRecords = [...payrollRecords].sort((a, b) => {
+                const dateA = new Date(a.year, a.month - 1);
+                const dateB = new Date(b.year, b.month - 1);
+                return dateB - dateA;
+            });
+
+            const latestPayroll = sortedRecords[0];
+            const avgSalary = payrollRecords.reduce((sum, p) => sum + p.netSalary, 0) / payrollRecords.length;
+            const ytdEarnings = payrollRecords.reduce((sum, p) => sum + p.netSalary, 0);
+
+            document.querySelector('.salary-overview').innerHTML = `
+                <div class="overview-card primary">
+                    <div class="overview-icon">₹</div>
+                    <div class="overview-label">Latest Salary</div>
+                    <div class="overview-amount">₹${latestPayroll.netSalary.toLocaleString()}</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">📈</div>
+                    <div class="overview-label">Average Salary</div>
+                    <div class="overview-amount" style="color: #4299e1;">₹${Math.round(avgSalary).toLocaleString()}</div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon">📊</div>
+                    <div class="overview-label">Total Earnings</div>
+                    <div class="overview-amount" style="color: #48bb78;">₹${ytdEarnings.toLocaleString()}</div>
+                </div>
+            `;
+        }
+
+        function updateLatestBreakdown() {
+            if (payrollRecords.length === 0) {
+                document.querySelector('.breakdown-card').innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                        No payroll records found
+                    </div>
+                `;
+                return;
+            }
+
+            const sortedRecords = [...payrollRecords].sort((a, b) => {
+                const dateA = new Date(a.year, a.month - 1);
+                const dateB = new Date(b.year, b.month - 1);
+                return dateB - dateA;
+            });
+
+            const latest = sortedRecords[0];
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+
+            const totalEarnings = latest.baseSalary + latest.allowances + latest.bonuses;
+            const totalDeductions = latest.deductions + latest.tax;
+
+            document.querySelector('.breakdown-card').innerHTML = `
+                <h3 class="breakdown-title">Latest Salary Breakdown - ${monthNames[latest.month - 1]} ${latest.year}</h3>
+                <div class="breakdown-grid">
+                    <div class="breakdown-section">
+                        <h4>Earnings</h4>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Basic Salary</span>
+                            <span class="breakdown-value">₹${latest.baseSalary.toLocaleString()}</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Allowances</span>
+                            <span class="breakdown-value">₹${latest.allowances.toLocaleString()}</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Bonuses</span>
+                            <span class="breakdown-value">₹${latest.bonuses.toLocaleString()}</span>
+                        </div>
+                        <div class="breakdown-total earnings">
+                            <span>Total Earnings</span>
+                            <span>₹${totalEarnings.toLocaleString()}</span>
+                        </div>
+                    </div>
+                    <div class="breakdown-section">
+                        <h4>Deductions</h4>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Deductions</span>
+                            <span class="breakdown-value">₹${latest.deductions.toLocaleString()}</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Tax</span>
+                            <span class="breakdown-value">₹${latest.tax.toLocaleString()}</span>
+                        </div>
+                        <div class="breakdown-total deductions">
+                            <span>Total Deductions</span>
+                            <span>₹${totalDeductions.toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updatePayslipHistory() {
+            const payslipContent = document.querySelector('.payslip-content');
+
+            if (payrollRecords.length === 0) {
+                payslipContent.innerHTML = `
+                    <div style="padding: 2rem; text-align: center; color: #6b7280;">
+                        No payslip history found
+                    </div>
+                `;
+                return;
+            }
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+
+           
+            const sortedRecords = [...payrollRecords].sort((a, b) => {
+                return new Date(b.paymentDate || 0) - new Date(a.paymentDate || 0);
+            });
+
+            payslipContent.innerHTML = sortedRecords.map(record => {
+                
+                let monthDisplay;
+                if (typeof record.month === 'string') {
+                    monthDisplay = record.month; 
+                } else if (typeof record.month === 'number') {
+                    monthDisplay = monthNames[record.month - 1] || 'Unknown';
+                } else {
+                    monthDisplay = 'Unknown';
+                }
+
+                const monthYear = `${monthDisplay} ${record.year || new Date().getFullYear()}`;
+                const processDate = record.paymentDate ?
+                    new Date(record.paymentDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) :
+                    'Not processed';
+
+                return `
+                    <div class="payslip-item">
+                        <div class="payslip-info">
+                            <div class="payslip-month">${monthYear}</div>
+                            <div class="payslip-details">
+                                <span class="detail-item">Processed on ${processDate}</span>
+                                <span class="detail-item">${record.status.charAt(0).toUpperCase() + record.status.slice(1)}</span>
+                            </div>
+                        </div>
+                        <div class="payslip-amount">₹${record.netSalary.toLocaleString()}</div>
+                        <div class="payslip-actions">
+                            <button class="action-btn" onclick="viewPayslip('${record._id}')">View</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function viewPayslip(id) {
+            const payslip = payrollRecords.find(p => p._id === id);
+            if (!payslip) return;
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+
+         
+            let monthDisplay;
+            if (typeof payslip.month === 'string') {
+                monthDisplay = payslip.month;
+            } else if (typeof payslip.month === 'number') {
+                monthDisplay = monthNames[payslip.month - 1] || 'Unknown';
+            } else {
+                monthDisplay = 'Unknown';
+            }
+
+            const monthYear = `${monthDisplay} ${payslip.year}`;
+            const totalEarnings = payslip.baseSalary + payslip.allowances + payslip.bonuses;
+            const totalDeductions = payslip.deductions + payslip.tax;
+
+            const modal = document.createElement('div');
+            modal.id = 'payslipModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;';
+
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 12px; padding: 2rem; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="color: #1a202c;">Payslip - ${monthYear}</h2>
+                        <button onclick="document.getElementById('payslipModal').remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">×</button>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h3 style="margin-bottom: 0.5rem;">Employee Details</h3>
+                        <p><strong>Name:</strong> ${currentEmployee?.name || 'N/A'}</p>
+                        <p><strong>Employee ID:</strong> ${currentEmployee?.employeeId || 'N/A'}</p>
+                        <p><strong>Department:</strong> ${currentEmployee?.department || 'N/A'}</p>
+                        <p><strong>Position:</strong> ${currentEmployee?.position || 'N/A'}</p>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <h3 style="margin-bottom: 0.5rem;">Earnings</h3>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Basic Salary</span>
+                            <span>₹${payslip.baseSalary.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Allowances</span>
+                            <span>₹${payslip.allowances.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Bonuses</span>
+                            <span>₹${payslip.bonuses.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; font-weight: 700; color: #48bb78;">
+                            <span>Total Earnings</span>
+                            <span>₹${totalEarnings.toLocaleString()}</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <h3 style="margin-bottom: 0.5rem;">Deductions</h3>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Deductions</span>
+                            <span>₹${payslip.deductions.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;">
+                            <span>Tax</span>
+                            <span>₹${payslip.tax.toLocaleString()}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; font-weight: 700; color: #f56565;">
+                            <span>Total Deductions</span>
+                            <span>₹${totalDeductions.toLocaleString()}</span>
+                        </div>
+                    </div>
+
+                    <div style="background: #48bb78; color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 0.875rem; margin-bottom: 0.5rem;">Net Salary</div>
+                        <div style="font-size: 2rem; font-weight: 700;">₹${payslip.netSalary.toLocaleString()}</div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        async function init() {
+            await loadEmployeeData();
+            await loadPayrollData();
+        }
+
+        init();
+    </script>
+
+

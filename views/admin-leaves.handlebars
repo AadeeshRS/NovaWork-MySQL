@@ -1,0 +1,872 @@
+<style>
+        body {
+            background: #f7fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 0 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-header p {
+            position: relative;
+            z-index: 1;
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+
+        .admin-nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .admin-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav a:hover,
+        .admin-nav a.active {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            color: #48bb78;
+            margin-top: 0.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(to right, #f8fafc, white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payroll-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .payroll-table th,
+        .payroll-table td {
+            padding: 1.25rem;
+            font-size: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            text-align: left;
+        }
+
+        .payroll-table th {
+            background: #f0f4ff;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .payroll-table tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        .payroll-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .payroll-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .status-paid {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-pending {
+            background: #fed7aa;
+            color: #92400e;
+        }
+
+        .status-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.625rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            color: #667eea;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #f0f4ff;
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            color: #4a5568;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover {
+            border-color: #667eea;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .employee-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .employee-id {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-nav ul {
+                gap: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .table-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="admin-header">
+        <div class="container">
+            <h1 class="admin-title">Leave Management</h1>
+            <p>Review and manage employee leave requests</p>
+        </div>
+    </section>
+
+    {{> admin-nav}}
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-icon">🕐</div>
+                <div class="stat-label">Pending Requests</div>
+                <div class="stat-value" id="pendingCount">0</div>
+                <div class="stat-change">Awaiting approval</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon">✅</div>
+                <div class="stat-label">Approved</div>
+                <div class="stat-value" id="approvedCount">0</div>
+                <div class="stat-change" id="approvedPercent">0% of total</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon">❌</div>
+                <div class="stat-label">Rejected</div>
+                <div class="stat-value" id="rejectedCount">0</div>
+                <div class="stat-change" id="rejectedPercent">0% of total</div>
+            </div>
+
+            <div class="stat-box">
+                <div class="stat-icon">📋</div>
+                <div class="stat-label">Total Requests</div>
+                <div class="stat-value" id="totalCount">0</div>
+                <div class="stat-change">All time</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Leave Requests</h3>
+                <div class="table-actions" style="display: flex; gap: 1rem;">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="sick">Sick Leave</option>
+                        <option value="casual">Casual Leave</option>
+                        <option value="annual">Annual Leave</option>
+                        <option value="unpaid">Unpaid Leave</option>
+                        <option value="maternity">Maternity Leave</option>
+                        <option value="paternity">Paternity Leave</option>
+                    </select>
+                </div>
+            </div>
+            <table class="payroll-table">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Days</th>
+                        <th>Applied Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leavesTableBody">
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 2rem;">
+                            Loading leave requests...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+   
+    <div id="leaveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Leave Request Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Employee</label>
+                    <input type="text" id="modalEmployee" readonly>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Leave Type</label>
+                        <input type="text" id="modalLeaveType" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Days</label>
+                        <input type="text" id="modalDays" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="text" id="modalStartDate" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="text" id="modalEndDate" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="modalReason" rows="3" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Applied Date</label>
+                    <input type="text" id="modalAppliedDate" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" id="modalStatus" readonly>
+                </div>
+                <div id="approvalSection" style="display: none;">
+                    <div class="form-group">
+                        <label>Approved By</label>
+                        <input type="text" id="modalApprovedBy" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Approved Date</label>
+                        <input type="text" id="modalApprovedDate" readonly>
+                    </div>
+                </div>
+                <div id="rejectionSection" style="display: none;">
+                    <div class="form-group">
+                        <label>Rejection Reason</label>
+                        <textarea id="modalRejectionReason" rows="2" readonly></textarea>
+                    </div>
+                </div>
+                <div id="actionButtons" style="display: none; margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Rejection Reason (if rejecting)</label>
+                        <textarea id="rejectionReasonInput" rows="2"
+                            placeholder="Enter reason for rejection..."></textarea>
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-success" onclick="approveLeave()">✅ Approve</button>
+                        <button type="button" class="btn btn-danger" onclick="rejectLeave()">❌ Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        const api = new API();
+        let allLeaves = [];
+        let currentLeaveId = null;
+
+        async function loadLeaves() {
+            try {
+                allLeaves = await api.getLeaves();
+                updateStats();
+                filterLeaves();
+            } catch (error) {
+                console.error('Error loading leaves:', error);
+                document.getElementById('leavesTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 2rem; color: #ef4444;">
+                            Error loading leave requests
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function updateStats() {
+            const pending = allLeaves.filter(l => l.status === 'pending').length;
+            const approved = allLeaves.filter(l => l.status === 'approved').length;
+            const rejected = allLeaves.filter(l => l.status === 'rejected').length;
+            const total = allLeaves.length;
+
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('approvedCount').textContent = approved;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('totalCount').textContent = total;
+
+            
+            const approvedPercent = total > 0 ? Math.round((approved / total) * 100) : 0;
+            const rejectedPercent = total > 0 ? Math.round((rejected / total) * 100) : 0;
+            document.getElementById('approvedPercent').textContent = `${approvedPercent}% of total`;
+            document.getElementById('rejectedPercent').textContent = `${rejectedPercent}% of total`;
+        }
+
+        function filterLeaves() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            let filtered = [...allLeaves];
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(l => l.status === statusFilter);
+            }
+
+            if (typeFilter !== 'all') {
+                filtered = filtered.filter(l => l.leaveType === typeFilter);
+            }
+
+            displayLeaves(filtered);
+        }
+
+        function displayLeaves(leaves) {
+            const tbody = document.getElementById('leavesTableBody');
+
+            if (leaves.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 2rem;">
+                            No leave requests found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = leaves.map(leave => {
+                const statusClass = leave.status === 'approved' ? 'status-active' :
+                    leave.status === 'rejected' ? 'status-inactive' : 'status-pending';
+                const statusIcon = leave.status === 'approved' ? '✅' :
+                    leave.status === 'rejected' ? '❌' : '🕐';
+
+                const employeeName = leave.employee ? leave.employee.name : 'Unknown';
+                const employeeId = leave.employee ? leave.employee.employeeId : 'N/A';
+                const startDate = new Date(leave.startDate).toLocaleDateString();
+                const endDate = new Date(leave.endDate).toLocaleDateString();
+                const appliedDate = new Date(leave.appliedDate).toLocaleDateString();
+
+                const leaveTypeDisplay = leave.leaveType.charAt(0).toUpperCase() + leave.leaveType.slice(1);
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="employee-info">
+                                <strong>${employeeName}</strong>
+                                <span class="employee-id">${employeeId}</span>
+                            </div>
+                        </td>
+                        <td>${leaveTypeDisplay}</td>
+                        <td>${startDate}</td>
+                        <td>${endDate}</td>
+                        <td><strong>${leave.days}</strong></td>
+                        <td>${appliedDate}</td>
+                        <td><span class="status-badge ${statusClass}">${statusIcon} ${leave.status.toUpperCase()}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="viewLeave('${leave._id}')">View</button>
+                            ${leave.status === 'pending' ? `<button class="action-btn" onclick="deleteLeave('${leave._id}')">Delete</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function viewLeave(id) {
+            const leave = allLeaves.find(l => l._id === id);
+            if (!leave) return;
+
+            currentLeaveId = id;
+
+            document.getElementById('modalEmployee').value = leave.employee ? leave.employee.name : 'Unknown';
+            document.getElementById('modalLeaveType').value = leave.leaveType.charAt(0).toUpperCase() + leave.leaveType.slice(1);
+            document.getElementById('modalDays').value = leave.days;
+            document.getElementById('modalStartDate').value = new Date(leave.startDate).toLocaleDateString();
+            document.getElementById('modalEndDate').value = new Date(leave.endDate).toLocaleDateString();
+            document.getElementById('modalReason').value = leave.reason;
+            document.getElementById('modalAppliedDate').value = new Date(leave.appliedDate).toLocaleDateString();
+            document.getElementById('modalStatus').value = leave.status.toUpperCase();
+
+           
+            const approvalSection = document.getElementById('approvalSection');
+            const rejectionSection = document.getElementById('rejectionSection');
+            const actionButtons = document.getElementById('actionButtons');
+
+            approvalSection.style.display = 'none';
+            rejectionSection.style.display = 'none';
+            actionButtons.style.display = 'none';
+
+            if (leave.status === 'approved') {
+                approvalSection.style.display = 'block';
+                document.getElementById('modalApprovedBy').value = leave.approvedBy || 'N/A';
+                document.getElementById('modalApprovedDate').value = leave.approvedDate ?
+                    new Date(leave.approvedDate).toLocaleDateString() : 'N/A';
+            } else if (leave.status === 'rejected') {
+                rejectionSection.style.display = 'block';
+                document.getElementById('modalRejectionReason').value = leave.rejectionReason || 'N/A';
+            } else if (leave.status === 'pending') {
+                actionButtons.style.display = 'block';
+                document.getElementById('rejectionReasonInput').value = '';
+            }
+
+            document.getElementById('leaveModal').style.display = 'block';
+        }
+
+        async function approveLeave() {
+            if (!currentLeaveId) return;
+
+            if (!confirm('Are you sure you want to approve this leave request?')) return;
+
+            try {
+                await api.updateLeave(currentLeaveId, {
+                    status: 'approved',
+                    approvedBy: 'Admin',
+                    approvedDate: new Date()
+                });
+
+                alert('Leave request approved successfully!');
+                document.getElementById('leaveModal').style.display = 'none';
+                loadLeaves();
+            } catch (error) {
+                console.error('Error approving leave:', error);
+                alert('Error approving leave request');
+            }
+        }
+
+        async function rejectLeave() {
+            if (!currentLeaveId) return;
+
+            const reason = document.getElementById('rejectionReasonInput').value.trim();
+            if (!reason) {
+                alert('Please provide a reason for rejection');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to reject this leave request?')) return;
+
+            try {
+                await api.updateLeave(currentLeaveId, {
+                    status: 'rejected',
+                    rejectionReason: reason,
+                    approvedBy: 'Admin',
+                    approvedDate: new Date()
+                });
+
+                alert('Leave request rejected');
+                document.getElementById('leaveModal').style.display = 'none';
+                loadLeaves();
+            } catch (error) {
+                console.error('Error rejecting leave:', error);
+                alert('Error rejecting leave request');
+            }
+        }
+
+        async function deleteLeave(id) {
+            if (!confirm('Are you sure you want to delete this leave request?')) return;
+
+            try {
+                await api.deleteLeave(id);
+                alert('Leave request deleted successfully!');
+                loadLeaves();
+            } catch (error) {
+                console.error('Error deleting leave:', error);
+                alert('Error deleting leave request');
+            }
+        }
+
+       
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('leaveModal').style.display = 'none';
+        };
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('leaveModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        
+        document.getElementById('statusFilter').addEventListener('change', filterLeaves);
+        document.getElementById('typeFilter').addEventListener('change', filterLeaves);
+
+        
+        loadLeaves();
+    </script>
+
+

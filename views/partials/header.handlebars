@@ -1,0 +1,64 @@
+<nav class="navbar">
+    <div class="container">
+        <a href="/" class="logo">💼 NovaWork</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/admin-dashboard">Admin</a></li>
+            <li><a href="/employee-dashboard">Employee</a></li>
+            <li><a href="/login" id="loginLink">Login</a></li>
+            <li style="display: none;" id="logoutLink"><a href="#" onclick="handleLogout(event)" style="color: #ef4444;">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    
+    async function checkLoginStatus() {
+        try {
+            const response = await fetch('/api/auth/check');
+            const data = await response.json();
+            
+            if (data.loggedIn) {
+                
+                document.getElementById('loginLink').style.display = 'none';
+                document.getElementById('logoutLink').style.display = 'block';
+            } else {
+                
+                document.getElementById('loginLink').style.display = 'block';
+                document.getElementById('logoutLink').style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error checking login status:', error);
+        }
+    }
+    
+  
+    async function handleLogout(event) {
+        event.preventDefault();
+        
+        if (confirm('Are you sure you want to logout?')) {
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Logged out successfully!');
+                    window.location.href = '/login';
+                } else {
+                    alert('Error logging out');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('An error occurred during logout');
+            }
+        }
+    }
+    
+    
+    checkLoginStatus();
+</script>

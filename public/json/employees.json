@@ -1,0 +1,79 @@
+{
+    "companyName": "NovaWork",
+    "totalEmployees": 1247,
+    "activeEmployees": 1198,
+    "employees": [
+        {
+            "id": "EMP001",
+            "name": "Rahul Sharma",
+            "department": "Information Technology",
+            "designation": "Senior Developer",
+            "salary": 80000,
+            "joiningDate": "2020-03-15",
+            "status": "Active"
+        },
+        {
+            "id": "EMP002",
+            "name": "Priya Singh",
+            "department": "Finance",
+            "designation": "Financial Analyst",
+            "salary": 65000,
+            "joiningDate": "2021-06-20",
+            "status": "Inactive"
+        },
+        {
+            "id": "EMP003",
+            "name": "Amit Kumar",
+            "department": "Human Resources",
+            "designation": "HR Manager",
+            "salary": 70000,
+            "joiningDate": "2019-11-10",
+            "status": "Active"
+        },
+        {
+            "id": "EMP004",
+            "name": "Sneha Patel",
+            "department": "Marketing",
+            "designation": "Marketing Executive",
+            "salary": 55000,
+            "joiningDate": "2022-01-05",
+            "status": "Active"
+        },
+        {
+            "id": "EMP005",
+            "name": "Vikram Reddy",
+            "department": "Operations",
+            "designation": "Operations Manager",
+            "salary": 75000,
+            "joiningDate": "2020-08-12",
+            "status": "Inactive"
+        },
+        {
+            "id": "EMP006",
+            "name": "Anita Desai",
+            "department": "Sales",
+            "designation": "Sales Manager",
+            "salary": 72000,
+            "joiningDate": "2021-03-22",
+            "status": "Active"
+        },
+        {
+            "id": "EMP007",
+            "name": "Karan Mehta",
+            "department": "Information Technology",
+            "designation": "Software Engineer",
+            "salary": 58000,
+            "joiningDate": "2022-07-15",
+            "status": "Active"
+        },
+        {
+            "id": "EMP008",
+            "name": "Neha Gupta",
+            "department": "Finance",
+            "designation": "Accountant",
+            "salary": 48000,
+            "joiningDate": "2021-09-10",
+            "status": "Active"
+        }
+    ]
+}
