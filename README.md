@@ -47,7 +47,8 @@ NovaWork/
 │   ├── novawork_schema.sql
 │   ├── novawork_procedures.sql
 │   ├── novawork_views.sql
-│   └── novawork_sample_queries.sql
+│   ├── novawork_sample_queries.sql
+│   └── novawork_transactions.sql
 │
 ├── views/                    # Handlebars application templates
 │   ├── layouts/
@@ -87,4 +88,4 @@ Start the local server with hot-reloading:
 ```bash
 npm run dev
 ```
-The application will launch and be instantly available at: **http://localhost:3000**
+The application will launch and be instantly available at: **http://localhost:3000** 
