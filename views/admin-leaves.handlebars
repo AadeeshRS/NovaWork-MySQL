@@ -773,7 +773,7 @@
 
             if (leave.status === 'approved') {
                 approvalSection.style.display = 'block';
-                document.getElementById('modalApprovedBy').value = leave.approvedBy || 'N/A';
+                document.getElementById('modalApprovedBy').value = leave.approvedByName || leave.approvedBy || 'N/A';
                 document.getElementById('modalApprovedDate').value = leave.approvedDate ?
                     new Date(leave.approvedDate).toLocaleDateString() : 'N/A';
             } else if (leave.status === 'rejected') {

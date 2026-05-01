@@ -1,20 +1,25 @@
 const { getPool } = require('../config/db');
 
 const selectFields = `
-    e.employee_id, e.name, e.email, e.role, e.department_id,
-    d.name AS department_name, e.position, e.salary,
+    e.employee_id, e.name, e.email, r.name AS role, e.role_id, e.department_id,
+    d.name AS department_name, p.title AS position, e.position_id, e.salary,
     e.join_date AS joinDate, e.phone, e.address, e.status,
     e.created_at AS createdAt, e.updated_at AS updatedAt
 `;
 
 const selectFieldsWithPassword = `
-    e.employee_id, e.name, e.email, e.password, e.role, e.department_id,
-    d.name AS department_name, e.position, e.salary,
+    e.employee_id, e.name, e.email, e.password, r.name AS role, e.role_id, e.department_id,
+    d.name AS department_name, p.title AS position, e.position_id, e.salary,
     e.join_date AS joinDate, e.phone, e.address, e.status,
     e.created_at AS createdAt, e.updated_at AS updatedAt
 `;
 
-const fromJoin = `FROM employee e LEFT JOIN department d ON e.department_id = d.department_id`;
+const fromJoin = `
+    FROM employee e
+    LEFT JOIN department d ON e.department_id = d.department_id
+    JOIN roles r ON e.role_id = r.role_id
+    JOIN positions p ON e.position_id = p.position_id
+`;
 
 function mapRow(row) {
     return {
@@ -32,6 +37,32 @@ async function resolveDepartmentId(pool, deptValue) {
     const [rows] = await pool.query('SELECT department_id FROM department WHERE name = ?', [deptValue]);
     if (rows.length > 0) return rows[0].department_id;
     return deptValue;
+}
+
+async function resolveRoleId(pool, roleValue = 'employee') {
+    if (Number.isInteger(roleValue)) return roleValue;
+    if (/^\d+$/.test(String(roleValue))) return Number(roleValue);
+
+    const roleName = roleValue || 'employee';
+    await pool.query(
+        'INSERT INTO roles (name) VALUES (?) ON DUPLICATE KEY UPDATE name = VALUES(name)',
+        [roleName]
+    );
+    const [rows] = await pool.query('SELECT role_id FROM roles WHERE name = ?', [roleName]);
+    return rows[0].role_id;
+}
+
+async function resolvePositionId(pool, positionValue) {
+    if (!positionValue) throw new Error('Position is required');
+    if (Number.isInteger(positionValue)) return positionValue;
+    if (/^\d+$/.test(String(positionValue))) return Number(positionValue);
+
+    await pool.query(
+        'INSERT INTO positions (title) VALUES (?) ON DUPLICATE KEY UPDATE title = VALUES(title)',
+        [positionValue]
+    );
+    const [rows] = await pool.query('SELECT position_id FROM positions WHERE title = ?', [positionValue]);
+    return rows[0].position_id;
 }
 
 const Employee = {
@@ -86,16 +117,19 @@ const Employee = {
     async create(data) {
         const pool = getPool();
         const deptId = await resolveDepartmentId(pool, data.department || data.department_id);
+        const roleId = await resolveRoleId(pool, data.role_id || data.role || 'employee');
+        const positionId = await resolvePositionId(pool, data.position_id || data.position);
+
         await pool.query(
-            'INSERT INTO employee (employee_id, name, email, password, role, department_id, position, salary, join_date, phone, address, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO employee (employee_id, name, email, password, role_id, department_id, position_id, salary, join_date, phone, address, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 data.employeeId || data.employee_id,
                 data.name,
                 data.email ? data.email.toLowerCase() : '',
                 data.password,
-                data.role || 'employee',
+                roleId,
                 deptId,
-                data.position,
+                positionId,
                 data.salary ? parseFloat(data.salary) : 0,
                 data.joinDate || data.join_date || new Date(),
                 data.phone || null,
@@ -114,7 +148,10 @@ const Employee = {
         if (data.name !== undefined) { fields.push('name = ?'); values.push(data.name); }
         if (data.email !== undefined) { fields.push('email = ?'); values.push(data.email.toLowerCase()); }
         if (data.password !== undefined) { fields.push('password = ?'); values.push(data.password); }
-        if (data.role !== undefined) { fields.push('role = ?'); values.push(data.role); }
+        if (data.role !== undefined || data.role_id !== undefined) {
+            fields.push('role_id = ?');
+            values.push(await resolveRoleId(pool, data.role_id || data.role));
+        }
 
         if (data.department !== undefined || data.department_id !== undefined) {
             const raw = data.department !== undefined ? data.department : data.department_id;
@@ -123,7 +160,11 @@ const Employee = {
             values.push(deptId);
         }
 
-        if (data.position !== undefined) { fields.push('position = ?'); values.push(data.position); }
+        if (data.position !== undefined || data.position_id !== undefined) {
+            fields.push('position_id = ?');
+            values.push(await resolvePositionId(pool, data.position_id || data.position));
+        }
+
         if (data.salary !== undefined) { fields.push('salary = ?'); values.push(data.salary === '' ? 0 : parseFloat(data.salary)); }
         if (data.joinDate !== undefined || data.join_date !== undefined) { fields.push('join_date = ?'); values.push(data.joinDate || data.join_date); }
         if (data.phone !== undefined) { fields.push('phone = ?'); values.push(data.phone); }
