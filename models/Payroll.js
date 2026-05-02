@@ -1,11 +1,13 @@
 const { getPool } = require('../config/db');
 
+const netSalaryExpression = '(p.base_salary + p.allowances + p.bonuses - p.deductions - p.tax)';
+
 const populateFields = `
     p.id, p.employee_id, p.month, p.year, p.base_salary AS baseSalary,
-    p.allowances, p.bonuses, p.deductions, p.tax, p.net_salary AS netSalary,
+    p.allowances, p.bonuses, p.deductions, p.tax, ${netSalaryExpression} AS netSalary,
     p.payment_date AS paymentDate, p.status, p.created_at AS createdAt, p.updated_at AS updatedAt,
     e.employee_id AS emp_employeeId, e.name AS emp_name, e.email AS emp_email,
-    e.department_id AS emp_department, e.position AS emp_position, e.status AS emp_status
+    e.department_id AS emp_department, pos.title AS emp_position, e.status AS emp_status
 `;
 
 const mapRow = (row) => ({
@@ -34,11 +36,17 @@ const mapRow = (row) => ({
     updatedAt: row.updatedAt
 });
 
+const fromJoin = `
+    FROM payroll p
+    LEFT JOIN employee e ON p.employee_id = e.employee_id
+    LEFT JOIN positions pos ON e.position_id = pos.position_id
+`;
+
 const Payroll = {
     async findAll() {
         const pool = getPool();
         const [rows] = await pool.query(
-            `SELECT ${populateFields} FROM payroll p LEFT JOIN employee e ON p.employee_id = e.employee_id ORDER BY p.year DESC, p.month DESC`
+            `SELECT ${populateFields} ${fromJoin} ORDER BY p.year DESC, p.month DESC`
         );
         return rows.map(mapRow);
     },
@@ -46,7 +54,7 @@ const Payroll = {
     async findByEmployee(employeeId) {
         const pool = getPool();
         const [rows] = await pool.query(
-            `SELECT ${populateFields} FROM payroll p LEFT JOIN employee e ON p.employee_id = e.employee_id WHERE p.employee_id = ? ORDER BY p.year DESC, p.month DESC`,
+            `SELECT ${populateFields} ${fromJoin} WHERE p.employee_id = ? ORDER BY p.year DESC, p.month DESC`,
             [employeeId]
         );
         return rows.map(mapRow);
@@ -55,7 +63,7 @@ const Payroll = {
     async findById(id) {
         const pool = getPool();
         const [rows] = await pool.query(
-            `SELECT ${populateFields} FROM payroll p LEFT JOIN employee e ON p.employee_id = e.employee_id WHERE p.id = ?`,
+            `SELECT ${populateFields} ${fromJoin} WHERE p.id = ?`,
             [id]
         );
         if (rows.length === 0) return null;
@@ -65,7 +73,7 @@ const Payroll = {
     async create(data) {
         const pool = getPool();
         const [result] = await pool.query(
-            'INSERT INTO payroll (employee_id, month, year, base_salary, allowances, bonuses, deductions, tax, net_salary, payment_date, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO payroll (employee_id, month, year, base_salary, allowances, bonuses, deductions, tax, payment_date, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 data.employee || data.employee_id,
                 data.month,
@@ -75,7 +83,6 @@ const Payroll = {
                 data.bonuses || 0,
                 data.deductions || 0,
                 data.tax || 0,
-                data.netSalary || data.net_salary,
                 data.paymentDate || data.payment_date || null,
                 data.status || 'pending'
             ]
@@ -96,7 +103,6 @@ const Payroll = {
         if (data.bonuses !== undefined) { fields.push('bonuses = ?'); values.push(data.bonuses); }
         if (data.deductions !== undefined) { fields.push('deductions = ?'); values.push(data.deductions); }
         if (data.tax !== undefined) { fields.push('tax = ?'); values.push(data.tax); }
-        if (data.netSalary !== undefined || data.net_salary !== undefined) { fields.push('net_salary = ?'); values.push(data.netSalary || data.net_salary); }
         if (data.paymentDate !== undefined || data.payment_date !== undefined) { fields.push('payment_date = ?'); values.push(data.paymentDate || data.payment_date); }
         if (data.status !== undefined) { fields.push('status = ?'); values.push(data.status); }
 
