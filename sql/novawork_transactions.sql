@@ -1,24 +1,9 @@
--- ============================================================
--- NovaWork - Transaction Demonstrations
--- Covers: START TRANSACTION, COMMIT, ROLLBACK, SAVEPOINT
--- ACID Properties: Atomicity, Consistency, Isolation, Durability
--- ============================================================
-
 USE novawork;
 
--- ============================================================
--- Setup lookup rows used by the transaction demos
--- ============================================================
 
 INSERT INTO positions (title)
 VALUES ('Junior Developer'), ('Test Engineer')
 ON DUPLICATE KEY UPDATE title = VALUES(title);
-
--- ============================================================
--- TRANSACTION 1: Hire a New Employee
--- Demonstrates ATOMICITY: the employee insert succeeds or rolls back.
--- Department headcount is no longer stored; it is calculated with COUNT.
--- ============================================================
 
 START TRANSACTION;
 
@@ -33,9 +18,6 @@ START TRANSACTION;
 
 COMMIT;
 
--- ============================================================
--- TRANSACTION 2: Salary Revision with ROLLBACK on Error
--- ============================================================
 
 START TRANSACTION;
 
@@ -61,11 +43,6 @@ START TRANSACTION;
 
 ROLLBACK;
 
--- ============================================================
--- TRANSACTION 3: Process Payroll
--- net_salary is calculated when selected, not stored.
--- ============================================================
-
 START TRANSACTION;
 
     INSERT INTO payroll (employee_id, month, year, base_salary, allowances, bonuses, deductions, tax, payment_date, status)
@@ -90,10 +67,6 @@ START TRANSACTION;
 
 COMMIT;
 
--- ============================================================
--- TRANSACTION 4: Leave Approval with SAVEPOINT
--- approved_by is an employee_id foreign key.
--- ============================================================
 
 START TRANSACTION;
 
@@ -113,9 +86,6 @@ START TRANSACTION;
 
 COMMIT;
 
--- ============================================================
--- TRANSACTION 5: Safe Employee Termination
--- ============================================================
 
 START TRANSACTION;
 
@@ -127,9 +97,7 @@ START TRANSACTION;
 
 ROLLBACK;
 
--- ============================================================
--- TRANSACTION 6: ISOLATION
--- ============================================================
+
 
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 
@@ -157,9 +125,7 @@ COMMIT;
 
 SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 
--- ============================================================
--- TRANSACTION 7: DURABILITY
--- ============================================================
+
 
 START TRANSACTION;
 

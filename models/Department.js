@@ -32,9 +32,14 @@ function mapRow(row) {
 
 async function resolveEmployeeId(pool, value) {
     if (!value || value === '') return null;
-    if (String(value).startsWith('EMP') || String(value).startsWith('ADMIN')) return value;
-    const [rows] = await pool.query('SELECT employee_id FROM employee WHERE name = ? LIMIT 1', [value]);
-    return rows.length > 0 ? rows[0].employee_id : value;
+    const strVal = String(value);
+    // Try direct employee_id lookup first
+    const [byId] = await pool.query('SELECT employee_id FROM employee WHERE employee_id = ? LIMIT 1', [strVal]);
+    if (byId.length > 0) return byId[0].employee_id;
+    // Try by name
+    const [byName] = await pool.query('SELECT employee_id FROM employee WHERE name = ? LIMIT 1', [strVal]);
+    // Return null if not found — never return raw string (causes FK violation)
+    return byName.length > 0 ? byName[0].employee_id : null;
 }
 
 async function resolveLocationId(pool, value = 'Main Office') {
